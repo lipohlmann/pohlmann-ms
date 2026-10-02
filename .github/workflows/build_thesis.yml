@@ -39,11 +39,11 @@ jobs:
           <html lang="en">
           <head>
             <meta charset="utf-8">
+            <meta http-equiv="refresh" content="0; url=pohlmann-thesis.pdf">
             <title>Pohlmann Masters Thesis</title>
           </head>
           <body>
-            <h1>Pohlmann Masters Thesis</h1>
-            <p><a href="thesis.pdf">View the thesis PDF</a></p>
+            <p>Redirecting to <a href="pohlmann-thesis.pdf">the thesis PDF</a>…</p>
           </body>
           </html>
           EOF
