@@ -1,0 +1,20 @@
+The steady-state, monoenergetic \gls{bte} can be generically written as:
+\begin{equation}
+  \label{eq:general-bte}
+  \ohat\cdot\nabla\psigeneral+\Sigma_t\psigeneral=\Qgeneral.
+\end{equation}
+Assuming $\Sigma_t>0$, solving for the angular flux by inverting the loss term gives:
+\begin{equation}
+  \label{eq:solve-for-psi}
+  \psigeneral=\frac{1}{\Sigma_t}\left(\Qgeneral-\ohat\cdot\nabla\psigeneral\right)
+\end{equation}
+Substituting \cref{eq:solve-for-psi} into \cref{eq:general-bte}'s streaming term gives:
+\begin{equation}
+  \label{eq:saaf-partial}
+  \ohat\cdot\nabla\left(\frac{1}{\Sigma_t}\left(\Qgeneral-\ohat\cdot\nabla\psigeneral\right)\right)+\Sigma_t\psigeneral=\Qgeneral
+\end{equation}
+Finally, using the linearity of the gradient operator, we arrive at the \gls{saaf} form of the \gls{bte}~\cite{liscum-powellFiniteElementSolution2002}:
+\begin{equation}
+  \label{eq:saaf-general}
+  -\ohat\cdot\nabla\left(\frac{1}{\Sigma_t}\ohat\cdot\nabla\psigeneral\right)+\Sigma_t\psigeneral=\Qgeneral-\ohat\cdot\nabla\left(\frac{1}{\Sigma_t}\Qgeneral\right)
+\end{equation}
