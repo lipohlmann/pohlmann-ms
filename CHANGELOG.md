@@ -3,6 +3,22 @@
 **Breaking changes** will be highlighted in each version, if there are any.
 Breaking change would mean a change is needed in the `.tex` file to accommodate the changes in the document class.
 
+## v1.8 - 2026-10-12
+
+### Breaking Changes
+
+- Line spacing for captions is not explicitly set to single-spaced. It was already
+  single-spaced for most figures, but some placement modifiers don't work with
+  the `setspace` package. If you want to use double spacing for captions, you will need to set it explicitly.
+- The Table of Contents now only lists chapter titles by default; in-chapter
+  headings (`\subsection`) are no longer included. To restore the previous
+  behavior, add `\AtBeginDocument{\setcounter{tocdepth}{2}}` to your preamble.
+- Figures, tables and equations are now numbered by chapter (e.g. Figure 2.1,
+  Table 3.2, Equation (1.4)), and by appendix letter in appendices (e.g.
+  Figure A.1). Text that refers to these items with hard-coded numbers instead of
+  `\ref` will need to be updated. To keep the previous continuous numbering, use
+  `\documentclass[continuousnumbering]{uofithesis}`.
+
 ## v1.7 - 2026-04-21
 
 ### Breaking Changes

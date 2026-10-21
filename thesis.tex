@@ -13,6 +13,7 @@
 }
 \documentclass{uofithesis}
 % \documentclass[thesis]{uofithesis} % for a thesis
+% \documentclass[continuousnumbering]{uofithesis} % number figures, tables and equations 1, 2, 3... instead of by chapter
 
 % fontsetup can slow down compilation, so you may wish to omit it when writing
 \usepackage{fontsetup}
@@ -81,9 +82,10 @@
 \item Assistant Professor April Novak, Second Reader
 }
 
-% To only have chapter-level (\section) headings in the Table of Contents,
-% uncomment the following line:
-%\AtBeginDocument{\setcounter{tocdepth}{1}}
+% By default, only chapter-level (\section) headings appear in the Table of
+% Contents, which is recommended by the Thesis Office. To also include 
+% \subsection headings, uncomment the following line:
+%\AtBeginDocument{\setcounter{tocdepth}{2}}
 
 \begin{document}
 
