@@ -1,0 +1,20 @@
+The standard \Sn equations approximate the continuous angular flux as a system of delta functions on the unit sphere.
+These equations are then coupled together through the scattering source term, which is an integral over direction vector.
+For a monoenergetic, time-independent problem, the system of equations has the form:
+\begin{equation}
+  \ohat_n\cdot\nabla\psirn+\Sigma_t\phaser\psirn=\qrn
+\end{equation}
+for $n\in N$ discrete directions (ordinates), which are preselected from a quadrature set on the unit sphere.
+The source term, $\qrn$, represents all sources present, which can include:
+\begin{enumerate}
+  \item scattering
+  \item fission
+  \item multiplication not via fission ($(n,2n)$, $(n,3n)$)
+  \item delayed neutron precursor decay
+  \item independent volumetric source.
+\end{enumerate}
+For a non-multiplying medium, scattering and the independent source are the only source terms, and the latter does not change throughout a simulation.
+The scattering source is defined as:
+\begin{equation}
+  q_{scatter}=\int_{4\pi}\Sigma_s\left(\rvec,\ohat'\cdot \ohat\right)\psi\left(\rvec,\ohat'\right)
+\end{equation}
