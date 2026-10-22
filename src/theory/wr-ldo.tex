@@ -2,6 +2,7 @@ The standard \Sn equations approximate the continuous angular flux as a system o
 These equations are then coupled together through the scattering source term, which is an integral over direction vector.
 For a monoenergetic, time-independent problem, the system of equations has the form:
 \begin{equation}
+  \label{eq:sn-equations}
   \ohat_n\cdot\nabla\psirn+\Sigma_t\phaser\psirn=\qrn
 \end{equation}
 for $n\in N$ discrete directions (ordinates), which are preselected from a quadrature set on the unit sphere.
@@ -16,5 +17,70 @@ The source term, $\qrn$, represents all sources present, which can include:
 For a non-multiplying medium, scattering and the independent source are the only source terms, and the latter does not change throughout a simulation.
 The scattering source is defined as:
 \begin{equation}
-  q_{scatter}=\int_{4\pi}\Sigma_s\left(\rvec,\ohat'\cdot \ohat\right)\psi\left(\rvec,\ohat'\right)
+  \label{eq:scattering-source}
+  q_{scatter}=\int_{4\pi}\Sigma_s\left(\rvec,\ohat'\cdot \ohat\right)\psi\left(\rvec,\ohat'\right)\odif{\ohat}.
 \end{equation}
+In an \Sn formulation, the integral \cref{eq:scattering-source} is approximated via a quadrature set.
+This set of discrete angles determines the angles for which \cref{eq:sn-equations} is solved for.
+
+The benefits to the \Sn model include in simplistic formulation and good numerical properties, such as strong stability and good parallelization.
+However, in replacing the standard model, a new numerical artifact presents itself: ray effects.
+
+  [FILL IN MORE]
+
+A new formulation is proposed, which we have called the \gls{wrldo}.
+Beginning with the steady-state, monoenergetic \gls{bte}\footnote{In principle, the most general form of the \gls{bte} follows the same derivations.}:
+\begin{equation}
+  \label{eq:ss-me-bte}
+  \ohat\codt\nabla\psi\phasero+\Sigma_t\phaser\psi\phasero=q\phasero.
+\end{equation}
+Or, by expanding the streaming term:
+\begin{equation}
+  \label{eq:exp-ss-me-bte}
+  \ohat_x\pdv{\psi}{x}+\ohat_y\pdv{\psi}{y}+\ohat_z\pdv{\psi}{z}+\Sigma_t\phaser\psi\phasero=q\phasero.
+\end{equation}
+We then perform two steps.
+First, we approximate the angular flux with a spectral expansion in angle, where the basis functions are chosen to be Lagrange polynomials.
+The direction vector, $\ohat$, can be uniquely defined by an azimuthal and polar angle.
+For the set of $J+1$ azimuthal angles $\theta_j\in [\theta_0,\theta_1,\ldots,\theta_{J}]$ and the set of $I+1$ polar angles $\varphi_i\in [\varphi_0,\varphi_1,\ldots,\varphi_I]$, the Lagrange interpolants are built with a tensor product:
+\begin{equation}
+  \psi\phasero\approx\sum_{i=0}^I\sum_{j=0}^J \psi_{ij}\left(\rvec\right)\ell_i(\varphi) \ell_j(\theta).
+\end{equation}
+For clearer notation, we define a function $\mathcal{L}$ and a mapping to a flattened index $n=i\times I+j$:
+\begin{equation}
+  \mathcal{L}_n\left(\ohat\right) \equiv \ell_{\text{floor}(n/I)}(\varphi)\ell_{n \bmod I}(\theta)
+\end{equation}
+This lets us rewrite the spectral expansion as:
+\begin{equation}
+  \label{eq:spectral-exp-angle}
+  \psi\phasero\approx\sum_{n=0}^N\psirn\mathcal{L}_n\left(\ohat\right)
+\end{equation}
+for $N+1 = (I+1)\times (J+1)$ unique direction vectors.
+The nodes are chosen to correspond to the abscissae of a quadrature set on the unit sphere.
+Second, we multiply \cref{eq:ss-me-bte} by a test function, $\gamma\left(\ohat\right)$, and integrate over the unit sphere.
+This becomes:
+\begin{multline}
+  \sum_{n=0}^N\pdv{\psi_n}{x} \int_{4\pi}\ohat_x \mathcal{L}_n\left(\ohat\right)\gamma\left(\ohat\right) \odif{\ohat} +
+  \sum_{n=0}^N\pdv{\psi_n}{y} \int_{4\pi}\ohat_y\mathcal{L}_n\left(\ohat\right)\gamma\left(\ohat\right)\odif{\ohat} + \\
+  +\sum_{n=0}^N\pdv{\psi_n}{z} \int_{4\pi}\ohat_z\mathcal{L}_n\left(\ohat\right)\gamma\left(\ohat\right)\odif{\ohat} +
+  \sum_{n=0}^N \Sigma_t \int_{4\pi}\psirn \mathcal{L}_n\left(\ohat\right)\gamma\left(\ohat\right)\odif{\ohat} = \\
+  =\sum_{n=0}^N\int_{4\pi}q\phasero\gamma\left(\ohat\right)\odif{\ohat}.
+\end{multline}
+Finally, we choose $\gamma\left(\ohat\right) \in [\mathcal{L}_0,\mathcal{L}_1,\ldots,\mathcal{L}_N]$, forming a Galerkin projection:
+\begin{multline}
+  \label{eq:wrldo-galerkin}
+  \sum_{n=0}^N\pdv{\psi_n}{x} \int_{4\pi}\ohat_x \mathcal{L}_n\left(\ohat\right)\mathcal{L}_m\left(\ohat\right) \odif{\ohat} +
+  \sum_{n=0}^N\pdv{\psi_n}{y} \int_{4\pi}\ohat_y\mathcal{L}_n\left(\ohat\right)\mathcal{L}_m\left(\ohat\right) \odif{\ohat} + \\
+  +\sum_{n=0}^N\pdv{\psi_n}{z} \int_{4\pi}\ohat_z\mathcal{L}_n\left(\ohat\right)\mathcal{L}_m\left(\ohat\right) \odif{\ohat} +
+  \sum_{n=0}^N \Sigma_t \int_{4\pi}\psirn \mathcal{L}_n\left(\ohat\right)\mathcal{L}_m\left(\ohat\right)\odif{\ohat} = \\
+  =\sum_{n=0}^N\int_{4\pi}q\phasero\mathcal{L}_m\left(\ohat\right) \odif{\ohat}.
+\end{multline}
+For clarity, we define the functional:
+\begin{equation}
+  \label{eq:sphere-functional}
+  G_{mn}\left[f\left(\ohat\right)\right]=\int_{4\pi}f\left(\ohat\right)\mathcal{L}_n\left(\ohat\right)\mathcal{L}_m\left(\ohat\right) \odif{\ohat}
+\end{equation}
+and substitute this into \cref{eq:wrldo-galerkin}, giving:
+\begin{multline}
+  \sum_{n=0}^N \left[G_{mn}\left[\ohat_x\right]\pdv{\psi_n}{x}+G_{mn}\left[\ohat_y\right]\pdv{\psi_n}{y}+ G_{mn}\left[\ohat_z\right]\pdv{\psi_n}{z} + G_{mn}\left[1\right]\Sigma_t\psirn\right]=\\=\sum_{n=0}^N G_{mn}\left[1\right]\qrn
+\end{multline}

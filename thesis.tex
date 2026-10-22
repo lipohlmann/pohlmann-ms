@@ -41,6 +41,7 @@
 % If you need chapter-level references, instead of `\section`, use the
 % `sectionwithreferences` environment.
 \usepackage[hidelinks,pdfusetitle]{hyperref}
+\usepackage[capitalise,noabbrev]{cleveref}
 \usepackage[backend=biber,style=ieee,defernumbers=true]{biblatex}
 \usepackage[bottom]{footmisc}
 
@@ -59,6 +60,11 @@
 \input{src/useful-commands.tex}
 
 \usepackage{physics2}
+\usepackage{derivative}
+
+\usepackage[acronym,toc]{glossaries}
+\input{src/acronyms}
+\makeglossaries
 
 \title{Spectral Elements for Neutral Particle Radiation Transport}
 \author{Liam M. Pohlmann}
@@ -117,6 +123,7 @@
 \end{dedication}
 
 \tableofcontents
+\printglossaries
 
 \input{src/main-outline.tex}
 
