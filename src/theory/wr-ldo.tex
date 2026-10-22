@@ -64,7 +64,7 @@ This becomes:
   \sum_{n=0}^N\pdv{\psi_n}{y} \int_{4\pi}\ohat_y\mathcal{L}_n\left(\ohat\right)\gamma\left(\ohat\right)\odif{\ohat} + \\
   +\sum_{n=0}^N\pdv{\psi_n}{z} \int_{4\pi}\ohat_z\mathcal{L}_n\left(\ohat\right)\gamma\left(\ohat\right)\odif{\ohat} +
   \sum_{n=0}^N \Sigma_t \int_{4\pi}\psirn \mathcal{L}_n\left(\ohat\right)\gamma\left(\ohat\right)\odif{\ohat} = \\
-  =\sum_{n=0}^N\int_{4\pi}q\phasero\gamma\left(\ohat\right)\odif{\ohat}.
+  =\int_{4\pi}q\phasero\gamma\left(\ohat\right)\odif{\ohat}.
 \end{multline}
 Finally, we choose $\gamma\left(\ohat\right) \in [\mathcal{L}_0,\mathcal{L}_1,\ldots,\mathcal{L}_N]$, forming a Galerkin projection:
 \begin{multline}
@@ -73,7 +73,7 @@ Finally, we choose $\gamma\left(\ohat\right) \in [\mathcal{L}_0,\mathcal{L}_1,\l
   \sum_{n=0}^N\pdv{\psi_n}{y} \int_{4\pi}\ohat_y\mathcal{L}_n\left(\ohat\right)\mathcal{L}_m\left(\ohat\right) \odif{\ohat} + \\
   +\sum_{n=0}^N\pdv{\psi_n}{z} \int_{4\pi}\ohat_z\mathcal{L}_n\left(\ohat\right)\mathcal{L}_m\left(\ohat\right) \odif{\ohat} +
   \sum_{n=0}^N \Sigma_t \int_{4\pi}\psirn \mathcal{L}_n\left(\ohat\right)\mathcal{L}_m\left(\ohat\right)\odif{\ohat} = \\
-  =\sum_{n=0}^N\int_{4\pi}q\phasero\mathcal{L}_m\left(\ohat\right) \odif{\ohat}.
+  =\int_{4\pi}q\phasero\mathcal{L}_m\left(\ohat\right) \odif{\ohat}.
 \end{multline}
 For clarity, we define the functional:
 \begin{equation}
@@ -82,5 +82,5 @@ For clarity, we define the functional:
 \end{equation}
 and substitute this into \cref{eq:wrldo-galerkin}, giving:
 \begin{multline}
-  \sum_{n=0}^N \left[G_{mn}\left[\ohat_x\right]\pdv{\psi_n}{x}+G_{mn}\left[\ohat_y\right]\pdv{\psi_n}{y}+ G_{mn}\left[\ohat_z\right]\pdv{\psi_n}{z} + G_{mn}\left[1\right]\Sigma_t\psirn\right]=\\=\sum_{n=0}^N G_{mn}\left[q\phasero\right]
+  \sum_{n=0}^N \left[G_{mn}\left[\ohat_x\right]\pdv{\psi_n}{x}+G_{mn}\left[\ohat_y\right]\pdv{\psi_n}{y}+ G_{mn}\left[\ohat_z\right]\pdv{\psi_n}{z} + G_{mn}\left[1\right]\Sigma_t\psirn\right]=\\=\int_{4\pi}q\phasero\mathcal{L}_m\left(\ohat\right) \odif{\ohat}
 \end{multline}
