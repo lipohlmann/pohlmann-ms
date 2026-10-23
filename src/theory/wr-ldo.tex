@@ -139,40 +139,40 @@ Examining the scattering source and using \cref{eq:spectral-exp-angle}:
 \begin{equation}
   \label{eq:scatter-source-no-quad}
   \begin{split}
-    q_{s}\phasero & = \int_{4\pi}\Sigma_s\left(\rvec,\ohat'\cdot\ohat\right)\psi\left(\rvec,\ohat'\right)\odif{\ohat'}                                                                    \\
-                  & \approx\int_{4\pi}\Sigma_s\left(\rvec,\ohat'\cdot\ohat\right)\left[\sum_{n'=0}^N\psi_{n'}\left(\vec{r}\right)\mathcal{L}_{n'}\left(\ohat'\right)\right] \odif{\ohat'} \\
-                  & =\sum_{n'}^N\left[\int_{4\pi}\Sigma_s\left(\rvec,\ohat'\cdot\ohat\right)\mathcal{L}_{n'}\left(\ohat'\right)\odif{\ohat'}\right]\psi_n\left(\ohat'\right).
+    q_{s}\phasero & = \int_{4\pi}\Sigma_s\left(\rvec,\ohat'\cdot\ohat\right)\psi\left(\rvec,\ohat'\right)\odif{\ohat'}                                                                 \\
+                  & \approx\int_{4\pi}\Sigma_s\left(\rvec,\ohat'\cdot\ohat\right)\left[\sum_{n=0}^N\psi_{n}\left(\vec{r}\right)\mathcal{L}_{n}\left(\ohat'\right)\right] \odif{\ohat'} \\
+                  & =\sum_{n}^N\left[\int_{4\pi}\Sigma_s\left(\rvec,\ohat'\cdot\ohat\right)\mathcal{L}_{n}\left(\ohat'\right)\odif{\ohat'}\right]\psi_n\left(\rvec\right).
   \end{split}
 \end{equation}
 Then, by applying \cref{eq:high-order-spherical-quad-set}, the integral above becomes:
 \begin{equation}
-  \int_{4\pi}\Sigma_s\left(\rvec,\ohat'\cdot\ohat\right)\mathcal{L}_{n'}\left(\ohat'\right)\odif{\ohat'}  \approx \sum_{p=0}^P w_p \Sigma_s\left(\rvec,\ohat'_p\cdot \ohat\right)\mathcal{L}_{n'}\left(\ohat'_p\right).
+  \int_{4\pi}\Sigma_s\left(\rvec,\ohat'\cdot\ohat\right)\mathcal{L}_{n}\left(\ohat'\right)\odif{\ohat'}  \approx \sum_{p=0}^P w_p \Sigma_s\left(\rvec,\ohat'_p\cdot \ohat\right)\mathcal{L}_{n}\left(\ohat'_p\right).
 \end{equation}
 We can go one step further and expand the differential scattering cross section using Legendre polynomials~\cite{larsenAdvancesDiscreteOrdinatesMethodology2010}.
 Defining $\mu_p\equiv \ohat'_p\cdot\ohat$, this is~\cite{bellNuclearReactorTheory1970}:
 \begin{equation}
   \label{eq:scatter-xs-expansion}
   \begin{aligned}
-     & \Sigma_s\left(\rvec,\mu_p\right) & = & \sum_{m=0}^{\infty}\Sigma_{sm}\left(\rvec\right)P_m\left(\mu_p\right)                        \\
-     & \Sigma_{sm}                      & = & \frac{2m+1}{2}\int_{-1}^{1}\Sigma_s\left(\rvec,\mu_p\right)P_m\left(\mu_p\right)\odif{\mu_p}
+     & \Sigma_s\left(\rvec,\mu_p\right) & = & \sum_{m=0}^{\infty}\Sigma_{s,m}\left(\rvec\right)P_m\left(\mu_p\right)                       \\
+     & \Sigma_{s,m}                     & = & \frac{2m+1}{2}\int_{-1}^{1}\Sigma_s\left(\rvec,\mu_p\right)P_m\left(\mu_p\right)\odif{\mu_p}
   \end{aligned}
 \end{equation}
 Thus, \cref{eq:scatter-source-no-quad} is now:
 \begin{equation}
   \label{eq:wrldo-scatter-source}
-  q_s\phasero\approx\sum_{n'}^N\psi_{n'}\left(\rvec\right)\sum_{p=0}^{P}w_p\mathcal{L}_{n'}\left(\ohat_p\right)\sum_{m=0}^{\infty}\Sigma_{sm}P_m\left(\mu_p\right).
+  q_s\phasero\approx\sum_{n=0}^N\psi_{n}\left(\rvec\right)\sum_{p=0}^{P}w_p\mathcal{L}_{n}\left(\ohat_p\right)\sum_{m=0}^{\infty}\Sigma_{s,m}P_m\left(\mu_p\right).
 \end{equation}
-In practice, the expansion in \cref{eq:scatter-xs-expansion} is truncated to a finite number of moments and are computed before the simulation is run.
+In practice, the expansion in \cref{eq:scatter-xs-expansion} is truncated to a finite number of moments, which are computed before the simulation is run.
 
 The fission source is much simpler to address:
 \begin{equation}
   \label{eq:wrldo-fission-source}
-  \begin{split}
-    q_f & =\frac{1}{4\pi}\nu\Sigma_f\int_{4\pi}\psi\phasero\odif{\ohat}                                                                             \\
-        & \approx \frac{1}{4\pi}\nu\Sigma_f \int_{4\pi}\left[\sum_{n=0}^N\psi_n\left(\rvec\right)\mathcal{L}_n\left(\ohat\right)\right]\odif{\ohat} \\
-        & =\frac{1}{4\pi}\nu\Sigma_f \sum_{n=0}^N\psi_n\left(\rvec\right)\int_{4\pi}\mathcal{L}_n\left(\ohat\right)\odif{\ohat}                     \\
-        & \approx \frac{1}{4\pi}\nu\Sigma_f \sum_{n=0}^N \psi_n\left(\rvec\right)\left[\sum_{p=0}^P w_p\mathcal{L}_n\left(\ohat_p\right) \right]    \\
-  \end{split}
+  \begin{aligned}
+    q_f & =\frac{1}{4\pi}\nu\Sigma_f\int_{4\pi}\psi\phasero\odif{\ohat}                                                                                                                                      \\
+        & \approx \frac{1}{4\pi}\nu\Sigma_f \int_{4\pi}\left[\sum_{n=0}^N\psi_n\left(\rvec\right)\mathcal{L}_n\left(\ohat\right)\right]\odif{\ohat} & \text{(insert \cref{eq:spectral-exp-angle})}           \\
+        & =\frac{1}{4\pi}\nu\Sigma_f \sum_{n=0}^N\psi_n\left(\rvec\right)\int_{4\pi}\mathcal{L}_n\left(\ohat\right)\odif{\ohat}                                                                              \\
+        & \approx \frac{1}{4\pi}\nu\Sigma_f \sum_{n=0}^N \psi_n\left(\rvec\right)\left[\sum_{p=0}^P w_p\mathcal{L}_n\left(\ohat_p\right) \right]    & \text{(apply \cref{eq:high-order-spherical-quad-set})} \\
+  \end{aligned}
 \end{equation}
 Notice in that applying our approximations, we have numerically defined the scalar flux:
 \begin{equation}
@@ -183,53 +183,72 @@ Notice in that applying our approximations, we have numerically defined the scal
   \end{split}
 \end{equation}
 
-We now expand the source, $q_n$, in using a finite set of spherical harmonic basis functions:
+We now expand the source, $q\phasero$, using spherical harmonics\footnote{See \cref{sec:spherical-harmonics} for more information.}:
 \begin{equation}
   \label{eq:source-expansion}
-  q_n\anglevars\approx \sum_{l=0}^{L} \sum_{m=-l}^l q_{n,lm} Y_{lm}\anglevars
+  q\anglevars = \sum_{l=0}^{\infty} \sum_{m=-l}^l q_{lm} Y_{lm}\anglevars
 \end{equation}
 with the spherical harmonics moments defined as:
 \begin{equation}
-  q_{n,lm}=\int_{0}^{2\pi}\int_{0}^{\pi}q_{n}\anglevars Y_{lm}^*\anglevars \sin\varphi \odif{\varphi}\odif{\theta}.
-\end{equation}
-For numerical purposes, we can approximate the moments use the selected spherical quadrature set:
-\begin{equation}
-  \label{eq:numerical-source-moments}
   \begin{split}
-    q_{n,lm} & =\int_{0}^{2\pi}\int_{0}^{\pi}q_{n}\anglevars Y_{lm}^*\anglevars \sin\varphi \odif{\varphi}\odif{\theta} \\
-             & = \int_{4\pi}q_n\left(\ohat\right)Y^*_{lm}\left(\ohat\right)\odif{\ohat}                                 \\
-             & \approx\sum_{i=0}^N\rho_iq_n\left(\ohat_i\right)Y^*_{lm}\left(\ohat_i\right).
+    q_{lm} & =\int_{0}^{2\pi}\int_{0}^{\pi}q\anglevars Y_{lm}^*\anglevars \sin\varphi \odif{\varphi}\odif{\theta} \\
+           & =\int_{4\pi}q\phasero Y_{lm}^*\left(\ohat\right)\odif{\ohat}.
   \end{split}
 \end{equation}
-The spherical harmonics themselves are defined as~\cite{bellNuclearReactorTheory1970}:
+The spherical harmonics moments are then approximated using \cref{eq:high-order-spherical-quad-set}:
 \begin{equation}
-  Y_{lm}\anglevars=\sqrt{\frac{2l+1}{4\pi}\frac{(l-m)!}{(l+m)!}}P_l^m\left(\cos\varphi\right)e^{im\theta}
+  \label{eq:numerical-source-moments}
+  q_{lm}\approx \sum_{p=0}^{P}w_p q\left(\ohat_p\right) Y^*_{lm}\left(\ohat_p\right)
 \end{equation}
-where $P_l^m$ is the associate Legendre polynomial and $\theta\in [0,2\pi]$, $\varphi\in [0,\pi]$.
-
 Substituting \cref{eq:source-expansion} into \cref{eq:lagrange-source} gives:
 \begin{equation}
   \label{eq:lagrange-source-sh}
   \begin{split}
-    \mathcal{Q}_n & \approx \frac{1}{\rho_n}\int_{4\pi}\sum_{l=0}^{L} \sum_{m=-l}^l q_{n,lm} Y_{lm}\left(\ohat\right) \mathcal{L}_n \left(\ohat\right)  \odif{\ohat} \\
-                  & =\frac{1}{\rho_n}\sum_{l=0}^{L} \sum_{m=-l}^l q_{n,lm} \int_{4\pi} Y_{lm}\left(\ohat\right) \mathcal{L}_n \left(\ohat\right) \odif{\ohat}.
+    \mathcal{Q}_n & = \frac{1}{\rho_n}\int_{4\pi}\sum_{l=0}^{\infty} \sum_{m=-l}^l q_{lm} Y_{lm}\left(\ohat\right) \mathcal{L}_n \left(\ohat\right)  \odif{\ohat} \\
+                  & =\frac{1}{\rho_n}\sum_{l=0}^{\infty} \sum_{m=-l}^l q_{lm} \int_{4\pi} Y_{lm}\left(\ohat\right) \mathcal{L}_n \left(\ohat\right) \odif{\ohat}.
   \end{split}
 \end{equation}
-From here, if we again approximate the integral with the same quadrature set on the unit sphere, we find:
+From here, we apply \cref{eq:high-order-spherical-quad-set} one last time to get a final expression for the Lagrange source term:
 \begin{equation}
-  \label{eq:numerical-sh-lagrange}
-  \begin{split}
-    \int_{4\pi} Y_{lm}\left(\ohat\right) \mathcal{L}_n \left(\ohat\right)  \odif{\ohat} & \approx \sum_{i=0}^{N}\rho_i Y_{lm}\left(\ohat_i\right)\underbrace{\mathcal{L}_n \left(\ohat_i\right)}_{\delta_{in}} \\
-                                                                                        & =\rho_n Y_{lm}\left(\ohat_n\right)
-  \end{split}
-\end{equation}
-Inserting the results of \cref{eq:numerical-sh-lagrange} into \cref{eq:lagrange-source-sh}, we arrive at an elegant final result:
-\begin{equation}
-  \mathcal{Q}_n\approx \sum_{l=0}^{L} \sum_{m=-l}^l q_{n,lm} Y_{lm}\left(\ohat_n\right).
+  \label{eq:discrete-lagrange-source}
+  \mathcal{Q}_n \approx \frac{1}{\rho_n}\sum_{l=0}^{\infty}\sum_{m=-l}^{l}q_{lm}\sum_{p=0}^{P}w_pY_{lm}\left(\ohat_p\right)\mathcal{L}_n\left(\ohat_p\right).
 \end{equation}
 
 A source iteration algorithm is proposed and is illustrated in \cref{fig:wrldo-flowchart}.
-Note that within the initialization process,
+The algorithm solves the iteration scheme:
+\begin{subequations}
+  \label{eq:wrldo-source-iters}
+  \begin{equation}
+    \left(\ohat_x\right)_m\pdv{\psi^{k+1}_n}{x}+\left(\ohat_y\right)_m\pdv{\psi^{k+1}_n}{y}+\left(\ohat_z\right)_m\pdv{\psi^{k+1}_n}{z}+\Sigma_t\psi^{k+1}_n  =  \mathcal{Q}^k_n
+  \end{equation}
+  \begin{equation}
+    \mathcal{Q}^{k+1}_n =  \frac{1}{\rho_n}\sum_{l=0}^{\infty}\sum_{m=-l}^{l}q_{lm}\sum_{p=0}^{P}w_pY_{lm}\left(\ohat_p\right)\mathcal{L}_n\left(\ohat_p\right)
+  \end{equation}
+  \begin{equation}
+    q_{lm}^{k+1} = \sum_{p=0}^{P}w_p q^{k+1}\left(\rvec,\ohat_p\right)Y^*_{lm}\left(\ohat\right)
+  \end{equation}
+  \begin{multline}
+    q^{k+1}\phasero = \sum_{n}^N\psi_{n}\left(\rvec\right)\sum_{p=0}^{P}w_p\mathcal{L}_{n}\left(\ohat_p\right)\sum_{m=0}^{\infty}\Sigma_{s,m}P_m\left(\ohat'_p\cdot\ohat\right) + \frac{1}{4\pi}\nu\Sigma_f \phi^{k+1}\left(\rvec\right) +\\+q_{ind}\phasero
+  \end{multline}
+  \begin{equation}
+    \phi^{k+1}\left(\rvec\right)=\sum_{n=0}^{N}\psi_n\left(\rvec\right)\sum_{p=0}^{P}w_p\mathcal{L}_n\left(\ohat_p\right)
+  \end{equation}
+\end{subequations}
+
+A few notes about the proposed procedure:
+\begin{enumerate}
+  \item The spectral expansion in \cref{eq:spectral-exp-angle} is expected to be ``good enough'' so that the solution between points on the initial, lower-order spherical quadrature set is well-approximated.
+  \item The additional quadrature set, \cref{eq:high-order-spherical-quad-set}, is intended to be a higher order to better approximate the spherical harmonic moments and, by extension, the source expansion.
+  \item The order of the spherical harmonics expansion will need to be chosen ahead of time -- an infinite sum is not feasible.
+  \item Any discretization in space is fair game -- let's do the \gls{sem}!
+  \item The above derivation is easily extended to time- and energy-dependent simulations. No approximations have been made on these domains.
+\end{enumerate}
+
+Some programming notes:
+\begin{enumerate}
+  \item Scattering moments must be computed ahead of time.
+  \item Evaluation of the Lagrange interpolants at the higher-order quadrature set nodes need only be done once, then their values stored for later reference.
+\end{enumerate}
 
 \begin{figure}
   \centering
