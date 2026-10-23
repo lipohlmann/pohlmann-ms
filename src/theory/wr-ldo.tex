@@ -114,35 +114,55 @@ where:
   \label{eq:lagrange-source}
   \mathcal{Q}_n\equiv\frac{1}{\rho_n}\int_{4\pi}q\phasero\mathcal{L}_n\left(\ohat\right).
 \end{equation}
-Those familiar with numerical transport methods may recognize \cref{eq:sn-equations} as an \Sn-like equation with a Lagrange-weighted integral source term.
+Those familiar with numerical transport methods may recognize \cref{eq:sn-equations} as an \Sn-like equation with a Lagrange-weighted integral source term, termed the \textit{Lagrange source}.
 \Cref{eq:sn-like} can thus be solved using swept methods, which are highly favorable for modern computer architecture.
 
-We now explore choices for computing $\mathcal{Q}_n$, the \textit{Lagrange source}.
-For a multiplying system with an independent source, $q$ is:
+Astonishingly, if one were to numerically compute the integral in \cref{eq:lagrange-source} using the \emph{same} quadrature set as the one over which the spectral expansion nodes of the angular flux (\cref{eq:spectral-exp-angle}) were selected, the Lagrange source collapses to the standard \Sn formulation.
+However, the purpose of this derivation is to provide a new formulation that allows for a higher-order representation of the source term.
+This will hopefully lead to improved accuracy and the reduction of numerical artifacts such as ray effects.
+Therefore, going forward, we define a new, higher-order quadrature set on the unit sphere:
 \begin{equation}
-  q\phasero = \int_{4\pi}\Sigma_s\left(\rvec,\ohat'\cdot\ohat\right)\psi\left(\rvec,\ohat'\right)\odif{\ohat'}+\frac{1}{4\pi}\nu\Sigma_f\int_{4\pi}\psi\phasero\odif{\ohat}+q_{ind}\phasero.
+  \label{eq:high-order-spherical-quad-set}
+  \int_{4\pi}f\left(\ohat\right)\odif{\ohat}\approx \sum_{p=0}^{P}w_p f\left(\ohat_p\right)
 \end{equation}
-Examining the scattering source:
+for $P+1$ total quadrature points that will be used to evaluate integrals present in the source.
+
+We now explore the evaluation of $\mathcal{Q}_n$.
+For a multiplying system with an independent source, $q$ is a sum of the contributions,
+\begin{equation}
+  q\phasero = q_s\phasero + q_f\left(\rvec\right)+q_{ind}\phasero,
+\end{equation}
+where $q_s$, $q_f$, and $q_{ind}$ are the scattering, fission, and independent sources, respectively.
+Note that the fission source is \emph{only} a function of space -- this is because fission is assumed to be an isotropic process.
+
+Examining the scattering source and using \cref{eq:spectral-exp-angle}:
 \begin{equation}
   \label{eq:scatter-source-no-quad}
   \begin{split}
     q_{s}\phasero & = \int_{4\pi}\Sigma_s\left(\rvec,\ohat'\cdot\ohat\right)\psi\left(\rvec,\ohat'\right)\odif{\ohat'}                                                                    \\
                   & \approx\int_{4\pi}\Sigma_s\left(\rvec,\ohat'\cdot\ohat\right)\left[\sum_{n'=0}^N\psi_{n'}\left(\vec{r}\right)\mathcal{L}_{n'}\left(\ohat'\right)\right] \odif{\ohat'} \\
-                  & =\sum_{n'}^N\left[\int_{4\pi}\Sigma_s\left(\rvec,\ohat'\cdot\ohat\right)\mathcal{L}_{n'}\left(\ohat'\right)\right]\psi_n\left(\ohat'\right).
+                  & =\sum_{n'}^N\left[\int_{4\pi}\Sigma_s\left(\rvec,\ohat'\cdot\ohat\right)\mathcal{L}_{n'}\left(\ohat'\right)\odif{\ohat'}\right]\psi_n\left(\ohat'\right).
   \end{split}
 \end{equation}
-Then, by applying the same quadrature set on the unit sphere, the integral above becomes:
+Then, by applying \cref{eq:high-order-spherical-quad-set}, the integral above becomes:
 \begin{equation}
-  \begin{split}
-    \int_{4\pi}\Sigma_s\left(\rvec,\ohat'\cdot\ohat\right)\mathcal{L}_{n'}\left(\ohat'\right)\odif{\ohat'} & \approx \sum_{i=0}^N\rho_i \Sigma_s\left(\rvec,\ohat'_i\cdot \ohat\right)\underbrace{\mathcal{L}_{n'}\left(\ohat'_i\right)}_{\delta_{n'i'}} \\
-                                                                                                           & =\rho_{n'}\Sigma_s\left(\rvec,\ohat_{n'}\cdot\ohat\right).
-  \end{split}
+  \int_{4\pi}\Sigma_s\left(\rvec,\ohat'\cdot\ohat\right)\mathcal{L}_{n'}\left(\ohat'\right)\odif{\ohat'}  \approx \sum_{p=0}^P w_p \Sigma_s\left(\rvec,\ohat'_p\cdot \ohat\right)\mathcal{L}_{n'}\left(\ohat'_p\right).
 \end{equation}
-Thus, \cref{eq:scatter-source-no-quad} reduces to:
+We can go one step further and expand the differential scattering cross section using Legendre polynomials~\cite{larsenAdvancesDiscreteOrdinatesMethodology2010}.
+Defining $\mu_p\equiv \ohat'_p\cdot\ohat$, this is~\cite{bellNuclearReactorTheory1970}:
+\begin{equation}
+  \label{eq:scatter-xs-expansion}
+  \begin{aligned}
+     & \Sigma_s\left(\rvec,\mu_p\right) & = & \sum_{m=0}^{\infty}\Sigma_{sm}\left(\rvec\right)P_m\left(\mu_p\right)                        \\
+     & \Sigma_{sm}                      & = & \frac{2m+1}{2}\int_{-1}^{1}\Sigma_s\left(\rvec,\mu_p\right)P_m\left(\mu_p\right)\odif{\mu_p}
+  \end{aligned}
+\end{equation}
+Thus, \cref{eq:scatter-source-no-quad} is now:
 \begin{equation}
   \label{eq:wrldo-scatter-source}
-  q_s\phasero\approx\sum_{n'}^N\rho_{n'}\Sigma_s\left(\rvec,\ohat_{n'}\cdot\ohat\right)\psi_{n'}\left(\rvec\right).
+  q_s\phasero\approx\sum_{n'}^N\psi_{n'}\left(\rvec\right)\sum_{p=0}^{P}w_p\mathcal{L}_{n'}\left(\ohat_p\right)\sum_{m=0}^{\infty}\Sigma_{sm}P_m\left(\mu_p\right).
 \end{equation}
+In practice, the expansion in \cref{eq:scatter-xs-expansion} is truncated to a finite number of moments and are computed before the simulation is run.
 
 The fission source is much simpler to address:
 \begin{equation}
