@@ -171,8 +171,15 @@ The fission source is much simpler to address:
     q_f & =\frac{1}{4\pi}\nu\Sigma_f\int_{4\pi}\psi\phasero\odif{\ohat}                                                                             \\
         & \approx \frac{1}{4\pi}\nu\Sigma_f \int_{4\pi}\left[\sum_{n=0}^N\psi_n\left(\rvec\right)\mathcal{L}_n\left(\ohat\right)\right]\odif{\ohat} \\
         & =\frac{1}{4\pi}\nu\Sigma_f \sum_{n=0}^N\psi_n\left(\rvec\right)\int_{4\pi}\mathcal{L}_n\left(\ohat\right)\odif{\ohat}                     \\
-        & \approx \frac{1}{4\pi}\nu\Sigma_f \sum_{n=0}^N \psi_n\left(\rvec\right)\left[\sum_{i=0}^N\rho_i\mathcal{L}_n\left(\ohat_i\right) \right]  \\
-        & = \sum_{n=0}^N\rho_n\psi_n\left(\rvec\right).
+        & \approx \frac{1}{4\pi}\nu\Sigma_f \sum_{n=0}^N \psi_n\left(\rvec\right)\left[\sum_{p=0}^P w_p\mathcal{L}_n\left(\ohat_p\right) \right]    \\
+  \end{split}
+\end{equation}
+Notice in that applying our approximations, we have numerically defined the scalar flux:
+\begin{equation}
+  \label{eq:numerical-scalar-flux}
+  \begin{split}
+    \phi(\rvec) & \equiv\int_{4\pi}\psi\phasero\odif{\ohat}                                                         \\
+                & \approx \sum_{n=0}^{N}\psi_n\left(\rvec\right)\sum_{p=0}^{P}w_p\mathcal{L}_n\left(\ohat_p\right).
   \end{split}
 \end{equation}
 
