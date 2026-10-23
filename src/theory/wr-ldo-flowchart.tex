@@ -1,0 +1,27 @@
+\begin{tikzpicture}[node distance=2.2cm]
+  \node (start) [startstop] {Start};
+  \node (input) [io, below of=start] {User simulation input.};
+  \node (init_quad) [process, below of=input, xshift=-1.5cm] {Create spherical quadrature sets.};
+  \node (initialize) [process, right of=init_quad, xshift=1.5cm] {Initialize angular flux and source moments.};
+  \node (sweep) [process, below of=input, yshift=-3cm] {Sweep solution across spatial domain.};
+  \node (source_moments) [process, below of=sweep, yshift=-1cm] {Compute new spherical harmonic source moments.};
+  \node (moments_converged) [decision, right of=source_moments, xshift=3cm] {Source moments have converged?};
+  \node (k_update) [process, below of=moments_converged, yshift=-1.75cm] {Compute new \keff.};
+  \node (k_converged) [decision, below of=k_update, yshift=-1cm] {\keff has converged?};
+  \node (recompute_moments) [process, right of=k_converged, xshift=3cm] {Recompute source moments.};
+  \node (stop) [startstop, below of=k_converged, yshift=-1cm] {Stop};
+
+  \draw [arrow] (start) -- (input);
+  \draw [arrow] (input) -- (init_quad);
+  \draw [arrow] (input) -- (initialize);
+  \draw [arrow] (init_quad) -- (sweep);
+  \draw [arrow] (initialize) -- (sweep);
+  \draw [arrow] (sweep) -- (source_moments);
+  \draw [arrow] (source_moments) -- (moments_converged);
+  \draw [arrow] (moments_converged) -- node[anchor=west] {yes} (k_update);
+  \draw [arrow] (k_update) -- (k_converged);
+  \draw [arrow] (k_converged) -- node[anchor=north] {no} (recompute_moments);
+  \draw [arrow] (recompute_moments) |- (sweep);
+  \draw [arrow] (k_converged) -- node[anchor=west] {yes} (stop);
+  \draw [arrow] (moments_converged) |- node[anchor=southeast,yshift=-0.5cm] {no} (sweep);
+\end{tikzpicture}

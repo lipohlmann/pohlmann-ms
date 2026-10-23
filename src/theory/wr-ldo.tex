@@ -163,7 +163,16 @@ We now expand the source, $q_n$, in using a finite set of spherical harmonic bas
 \end{equation}
 with the spherical harmonics moments defined as:
 \begin{equation}
-  q_{n,lm}=\int_{0}^{2\pi}\int_{0}^{\pi}q_{n}\anglevars Y_{lm}^* \sin\varphi\anglevars \odif{\varphi}\odif{\theta}.
+  q_{n,lm}=\int_{0}^{2\pi}\int_{0}^{\pi}q_{n}\anglevars Y_{lm}^*\anglevars \sin\varphi \odif{\varphi}\odif{\theta}.
+\end{equation}
+For numerical purposes, we can approximate the moments use the selected spherical quadrature set:
+\begin{equation}
+  \label{eq:numerical-source-moments}
+  \begin{split}
+    q_{n,lm} & =\int_{0}^{2\pi}\int_{0}^{\pi}q_{n}\anglevars Y_{lm}^*\anglevars \sin\varphi \odif{\varphi}\odif{\theta} \\
+             & = \int_{4\pi}q_n\left(\ohat\right)Y^*_{lm}\left(\ohat\right)\odif{\ohat}                                 \\
+             & \approx\sum_{i=0}^N\rho_iq_n\left(\ohat_i\right)Y^*_{lm}\left(\ohat_i\right).
+  \end{split}
 \end{equation}
 The spherical harmonics themselves are defined as~\cite{bellNuclearReactorTheory1970}:
 \begin{equation}
@@ -175,7 +184,7 @@ Substituting \cref{eq:source-expansion} into \cref{eq:lagrange-source} gives:
 \begin{equation}
   \label{eq:lagrange-source-sh}
   \begin{split}
-    \mathcal{Q}_n & \frac{1}{\rho_n}\approx \int_{4\pi}\sum_{l=0}^{L} \sum_{m=-l}^l q_{n,lm} Y_{lm}\left(\ohat\right) \mathcal{L}_n \left(\ohat\right)  \odif{\ohat} \\
+    \mathcal{Q}_n & \approx \frac{1}{\rho_n}\int_{4\pi}\sum_{l=0}^{L} \sum_{m=-l}^l q_{n,lm} Y_{lm}\left(\ohat\right) \mathcal{L}_n \left(\ohat\right)  \odif{\ohat} \\
                   & =\frac{1}{\rho_n}\sum_{l=0}^{L} \sum_{m=-l}^l q_{n,lm} \int_{4\pi} Y_{lm}\left(\ohat\right) \mathcal{L}_n \left(\ohat\right) \odif{\ohat}.
   \end{split}
 \end{equation}
@@ -191,3 +200,13 @@ Inserting the results of \cref{eq:numerical-sh-lagrange} into \cref{eq:lagrange-
 \begin{equation}
   \mathcal{Q}_n\approx \sum_{l=0}^{L} \sum_{m=-l}^l q_{n,lm} Y_{lm}\left(\ohat_n\right).
 \end{equation}
+
+A source iteration algorithm is proposed and is illustrated in \cref{fig:wrldo-flowchart}.
+Note that within the initialization process,
+
+\begin{figure}
+  \centering
+  \input{src/theory/wr-ldo-flowchart.tex}
+  \caption{\Gls{wrldo} numerical solution flowchart.}
+  \label{fig:wrldo-flowchart}
+\end{figure}
