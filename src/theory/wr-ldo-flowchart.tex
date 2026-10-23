@@ -2,13 +2,13 @@
   \node (start) [startstop] {Start};
   \node (input) [io, below of=start] {User simulation input.};
   \node (init_quad) [process, below of=input, xshift=-1.5cm] {Create spherical quadrature sets.};
-  \node (initialize) [process, right of=init_quad, xshift=1.5cm] {Initialize angular flux and source moments.};
+  \node (initialize) [process, right of=init_quad, xshift=1.5cm] {Initialize angular flux and Lagrange source.};
   \node (sweep) [process, below of=input, yshift=-3cm] {Sweep solution across spatial domain.};
-  \node (source_moments) [process, below of=sweep, yshift=-1cm] {Compute new spherical harmonic source moments.};
-  \node (moments_converged) [decision, right of=source_moments, xshift=3cm] {Source moments have converged?};
+  \node (source_moments) [process, below of=sweep, yshift=-1cm] {Compute new Lagrange source.};
+  \node (moments_converged) [decision, right of=source_moments, xshift=3cm] {Lagrange source has converged?};
   \node (k_update) [process, below of=moments_converged, yshift=-1.75cm] {Compute new \keff.};
   \node (k_converged) [decision, below of=k_update, yshift=-1cm] {\keff has converged?};
-  \node (recompute_moments) [process, right of=k_converged, xshift=3cm] {Recompute source moments.};
+  \node (recompute_moments) [process, right of=k_converged, xshift=3cm] {Recompute Lagrange source.};
   \node (stop) [startstop, below of=k_converged, yshift=-1cm] {Stop};
 
   \draw [arrow] (start) -- (input);
