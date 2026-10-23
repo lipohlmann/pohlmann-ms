@@ -82,5 +82,112 @@ For clarity, we define the functional:
 \end{equation}
 and substitute this into \cref{eq:wrldo-galerkin}, giving:
 \begin{multline}
-  \sum_{n=0}^N \left[G_{mn}\left[\ohat_x\right]\pdv{\psi_n}{x}+G_{mn}\left[\ohat_y\right]\pdv{\psi_n}{y}+ G_{mn}\left[\ohat_z\right]\pdv{\psi_n}{z} + G_{mn}\left[1\right]\Sigma_t\psirn\right]=\\=\int_{4\pi}q\phasero\mathcal{L}_m\left(\ohat\right) \odif{\ohat}
+  \sum_{n=0}^N \left[G_{mn}\left[\ohat_x\right]\pdv{\psi_n}{x}+G_{mn}\left[\ohat_y\right]\pdv{\psi_n}{y}+ G_{mn}\left[\ohat_z\right]\pdv{\psi_n}{z} + G_{mn}\left[1\right]\Sigma_t\psirn\right]=\\=\int_{4\pi}q\phasero\mathcal{L}_m\left(\ohat\right) \odif{\ohat}.
 \end{multline}
+We can now address the evaluation of the functional.
+Approximating \cref{eq:sphere-functional} with a generic quadrature set gives:
+\begin{equation}
+  \begin{split}
+    \int_{4\pi}f\left(\ohat\right)\mathcal{L}_n\left(\ohat\right)\mathcal{L}_m\left(\ohat\right) \odif{\ohat} & \approx \sum_{p=0}^N \rho_p f\left(\ohat_p\right) \underbrace{\mathcal{L}_n\left(\ohat_p\right)}_{\delta_{np}} \underbrace{\mathcal{L}_m\left(\ohat_p\right)}_{\delta_{mp}} \\
+                                                                                                              & =\rho_m f(\ohat_m)\delta_{mn}
+  \end{split}
+\end{equation}
+where in the last line we have use the interpolation property of the Lagrange interpolants to filter out most terms in the sum.
+This in term creates a diagonal system of equations $\underline{\Omega}\vec{\psi}=\vec{q}$, where:
+\begin{equation}
+  \label{eq:diagonal-system}
+  \begin{aligned}
+     & \underline{\Omega}_{mn} & = & \begin{cases}
+                                       \rho_n\left[\left(\ohat_x\right)_m\pdv{}{x}+\left(\ohat_y\right)_m\pdv{}{y}+\left(\ohat_z\right)_m\pdv{}{z}+\Sigma_t\right], & m=n     \\
+                                       0,                                                                                                                           & m\neq n
+                                     \end{cases} \\
+     & \vec{q}_m               & = & \int_{4\pi}q\phasero\mathcal{L}_m\left(\ohat\right) \odif{\ohat}.
+  \end{aligned}
+\end{equation}
+Letting $m\leftarrow n$ let's us write the $n$\textsuperscript{th} equation of \cref{eq:diagonal-system} as:
+\begin{equation}
+  \label{eq:sn-like}
+  \left(\ohat_x\right)_m\pdv{\psi_n}{x}+\left(\ohat_y\right)_m\pdv{\psi_n}{y}+\left(\ohat_z\right)_m\pdv{\psi_n}{z}+\Sigma_t\psi_n =  \mathcal{Q}_n
+\end{equation}
+where:
+\begin{equation}
+  \label{eq:lagrange-source}
+  \mathcal{Q}_n\equiv\frac{1}{\rho_n}\int_{4\pi}q\phasero\mathcal{L}_n\left(\ohat\right).
+\end{equation}
+Those familiar with numerical transport methods may recognize \cref{eq:sn-equations} as an \Sn-like equation with a Lagrange-weighted integral source term.
+\Cref{eq:sn-like} can thus be solved using swept methods, which are highly favorable for modern computer architecture.
+
+We now explore choices for computing $\mathcal{Q}_n$, the \textit{Lagrange source}.
+For a multiplying system with an independent source, $q$ is:
+\begin{equation}
+  q\phasero = \int_{4\pi}\Sigma_s\left(\rvec,\ohat'\cdot\ohat\right)\psi\left(\rvec,\ohat'\right)\odif{\ohat'}+\frac{1}{4\pi}\nu\Sigma_f\int_{4\pi}\psi\phasero\odif{\ohat}+q_{ind}\phasero.
+\end{equation}
+Examining the scattering source:
+\begin{equation}
+  \label{eq:scatter-source-no-quad}
+  \begin{split}
+    q_{s}\phasero & = \int_{4\pi}\Sigma_s\left(\rvec,\ohat'\cdot\ohat\right)\psi\left(\rvec,\ohat'\right)\odif{\ohat'}                                                                    \\
+                  & \approx\int_{4\pi}\Sigma_s\left(\rvec,\ohat'\cdot\ohat\right)\left[\sum_{n'=0}^N\psi_{n'}\left(\vec{r}\right)\mathcal{L}_{n'}\left(\ohat'\right)\right] \odif{\ohat'} \\
+                  & =\sum_{n'}^N\left[\int_{4\pi}\Sigma_s\left(\rvec,\ohat'\cdot\ohat\right)\mathcal{L}_{n'}\left(\ohat'\right)\right]\psi_n\left(\ohat'\right).
+  \end{split}
+\end{equation}
+Then, by applying the same quadrature set on the unit sphere, the integral above becomes:
+\begin{equation}
+  \begin{split}
+    \int_{4\pi}\Sigma_s\left(\rvec,\ohat'\cdot\ohat\right)\mathcal{L}_{n'}\left(\ohat'\right)\odif{\ohat'} & \approx \sum_{i=0}^N\rho_i \Sigma_s\left(\rvec,\ohat'_i\cdot \ohat\right)\underbrace{\mathcal{L}_{n'}\left(\ohat'_i\right)}_{\delta_{n'i'}} \\
+                                                                                                           & =\rho_{n'}\Sigma_s\left(\rvec,\ohat_{n'}\cdot\ohat\right).
+  \end{split}
+\end{equation}
+Thus, \cref{eq:scatter-source-no-quad} reduces to:
+\begin{equation}
+  \label{eq:wrldo-scatter-source}
+  q_s\phasero\approx\sum_{n'}^N\rho_{n'}\Sigma_s\left(\rvec,\ohat_{n'}\cdot\ohat\right)\psi_{n'}\left(\rvec\right).
+\end{equation}
+
+The fission source is much simpler to address:
+\begin{equation}
+  \label{eq:wrldo-fission-source}
+  \begin{split}
+    q_f & =\frac{1}{4\pi}\nu\Sigma_f\int_{4\pi}\psi\phasero\odif{\ohat}                                                                             \\
+        & \approx \frac{1}{4\pi}\nu\Sigma_f \int_{4\pi}\left[\sum_{n=0}^N\psi_n\left(\rvec\right)\mathcal{L}_n\left(\ohat\right)\right]\odif{\ohat} \\
+        & =\frac{1}{4\pi}\nu\Sigma_f \sum_{n=0}^N\psi_n\left(\rvec\right)\int_{4\pi}\mathcal{L}_n\left(\ohat\right)\odif{\ohat}                     \\
+        & \approx \frac{1}{4\pi}\nu\Sigma_f \sum_{n=0}^N \psi_n\left(\rvec\right)\left[\sum_{i=0}^N\rho_i\mathcal{L}_n\left(\ohat_i\right) \right]  \\
+        & = \sum_{n=0}^N\rho_n\psi_n\left(\rvec\right).
+  \end{split}
+\end{equation}
+
+We now expand the source, $q_n$, in using a finite set of spherical harmonic basis functions:
+\begin{equation}
+  \label{eq:source-expansion}
+  q_n\anglevars\approx \sum_{l=0}^{L} \sum_{m=-l}^l q_{n,lm} Y_{lm}\anglevars
+\end{equation}
+with the spherical harmonics moments defined as:
+\begin{equation}
+  q_{n,lm}=\int_{0}^{2\pi}\int_{0}^{\pi}q_{n}\anglevars Y_{lm}^* \sin\varphi\anglevars \odif{\varphi}\odif{\theta}.
+\end{equation}
+The spherical harmonics themselves are defined as~\cite{bellNuclearReactorTheory1970}:
+\begin{equation}
+  Y_{lm}\anglevars=\sqrt{\frac{2l+1}{4\pi}\frac{(l-m)!}{(l+m)!}}P_l^m\left(\cos\varphi\right)e^{im\theta}
+\end{equation}
+where $P_l^m$ is the associate Legendre polynomial and $\theta\in [0,2\pi]$, $\varphi\in [0,\pi]$.
+
+Substituting \cref{eq:source-expansion} into \cref{eq:lagrange-source} gives:
+\begin{equation}
+  \label{eq:lagrange-source-sh}
+  \begin{split}
+    \mathcal{Q}_n & \frac{1}{\rho_n}\approx \int_{4\pi}\sum_{l=0}^{L} \sum_{m=-l}^l q_{n,lm} Y_{lm}\left(\ohat\right) \mathcal{L}_n \left(\ohat\right)  \odif{\ohat} \\
+                  & =\frac{1}{\rho_n}\sum_{l=0}^{L} \sum_{m=-l}^l q_{n,lm} \int_{4\pi} Y_{lm}\left(\ohat\right) \mathcal{L}_n \left(\ohat\right) \odif{\ohat}.
+  \end{split}
+\end{equation}
+From here, if we again approximate the integral with the same quadrature set on the unit sphere, we find:
+\begin{equation}
+  \label{eq:numerical-sh-lagrange}
+  \begin{split}
+    \int_{4\pi} Y_{lm}\left(\ohat\right) \mathcal{L}_n \left(\ohat\right)  \odif{\ohat} & \approx \sum_{i=0}^{N}\rho_i Y_{lm}\left(\ohat_i\right)\underbrace{\mathcal{L}_n \left(\ohat_i\right)}_{\delta_{in}} \\
+                                                                                        & =\rho_n Y_{lm}\left(\ohat_n\right)
+  \end{split}
+\end{equation}
+Inserting the results of \cref{eq:numerical-sh-lagrange} into \cref{eq:lagrange-source-sh}, we arrive at an elegant final result:
+\begin{equation}
+  \mathcal{Q}_n\approx \sum_{l=0}^{L} \sum_{m=-l}^l q_{n,lm} Y_{lm}\left(\ohat_n\right).
+\end{equation}
