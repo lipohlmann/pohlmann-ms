@@ -1,20 +1,639 @@
-@online{SleepFoundation1,
-  title   = {94\% of Us Drink Caffeinated Beverages. But What Does it do to Our Sleep?},
-  author  = {SleepFoundation},
-  year    = {2023},
-  url     = {https://www.sleepfoundation.org/sleep-news/94-percent-of-us-drink-caffeinated-beverages},
-  urldate = {2025-02-17}
+@article{ahrensLagrangeDiscreteOrdinates2015,
+  title        = {Lagrange {{Discrete Ordinates}}: {{A New Angular Discretization}} for the {{Three-Dimensional Linear Boltzmann Equation}}},
+  shorttitle   = {Lagrange {{Discrete Ordinates}}},
+  author       = {Ahrens, Cory D.},
+  date         = {2015-07-01},
+  journaltitle = {Nuclear Science and Engineering},
+  volume       = {180},
+  number       = {3},
+  pages        = {273--285},
+  publisher    = {Taylor \& Francis},
+  issn         = {0029-5639},
+  doi          = {10.13182/NSE14-76},
+  url          = {https://doi.org/10.13182/NSE14-76},
+  urldate      = {2026-10-21},
+  abstract     = {The classical Sn equations of Carlson and Lee have been a mainstay in multidimensional radiation transport calculations. In this paper, an alternative to the Sn equations, the “Lagrange Discrete Ordinates” (LDO) equations, are derived. These equations are based on an interpolatory framework for functions on the unit sphere in three dimensions. While the LDO equations retain the formal structure of the classical Sn equations, they have a number of important differences. The LDO equations naturally allow the angular flux to be evaluated in directions other than those found in the quadrature set. To calculate the scattering source in the LDO equations, no spherical harmonic moments are needed—only values of the angular flux. Moreover, the LDO scattering source preserves the eigenstructure of the continuous scattering operator. The formal similarity of the LDO equations with the Sn equations should allow easy modification of mature three-dimensional Sn codes such as PARTISN or PENTRAN to solve the LDO equations. Numerical results are shown that demonstrate the spectral convergence (in angle) of the LDO equations for smooth solutions and the ability to mitigate ray effects by increasing the angular resolution of the LDO equations.},
+  file         = {/home/liamp2/Zotero/storage/7FRAFJ8P/Ahrens - 2015 - Lagrange Discrete Ordinates A New Angular Discretization for the Three-Dimensional Linear Boltzmann.pdf}
 }
 
-@article{LOFTFIELD20161762,
-  title   = {Coffee Drinking Is Widespread in the United States, but Usual Intake Varies by Key Demographic and Lifestyle Factors123},
-  journal = {The Journal of Nutrition},
-  volume  = {146},
-  number  = {9},
-  pages   = {1762-1768},
-  year    = {2016},
-  issn    = {0022-3166},
-  doi     = {https://doi.org/10.3945/jn.116.233940},
-  url     = {https://www.sciencedirect.com/science/article/pii/S0022316623007046},
-  author  = {Erikka Loftfield and Neal D Freedman and Kevin W Dodd and Emily Vogtmann and Qian Xiao and Rashmi Sinha and Barry I Graubard}
+@book{AnalyticalBenchmarksNuclear,
+  title     = {Analytical {{Benchmarks}} for {{Nuclear Engineering Applications}}: {{Case Studies}} in {{Neutron Transport Theory}}},
+  author    = {Ganapol, B. D.},
+  date      = {2008},
+  publisher = {OECD Publishing},
+  location  = {Paris},
+  url       = {https://www.oecd-nea.org/jcms/pl_14328/analytical-benchmarks-for-nuclear-engineering-applications},
+  abstract  = {The developers of computer codes involving neutron transport theory for nuclear engineering applications seldom apply analytical benchmarking strategies to ensure the quality of their programs. A major reason for this is the lack of analytical benchmarks and their documentation in the literature. The few such benchmarks that do exist are difficult to locate, as they are scattered throughout the neutron transport and radiative transfer literature. The motivation for this benchmark compendium, therefore, is to gather several analytical benchmarks appropriate for nuclear engineering applications under one cover. We consider the following three subject areas: neutron slowing down and thermalization without spatial dependence, one-dimensional neutron transport in infinite and finite media, and multidimensional neutron transport in a half-space and an infinite medium. Each benchmark is briefly described, followed by a detailed derivation of the analytical solution representation. Finally, a demonstration of the evaluation of the solution representation includes qualified numerical benchmark results. All accompanying computer codes are suitable for the PC computational environment and can serve as educational tools for courses in nuclear engineering. While this benchmark compilation does not contain all possible benchmarks, by any means, it does include some of the most prominent ones and should serve as a valuable reference.},
+  isbn      = {978-92-64-99056-2},
+  langid    = {english},
+  file      = {/home/liamp2/Zotero/storage/YECCDAUM/Ganapol - 2008 - Analytical Benchmarks for Nuclear Engineering Applications Case Studies in Neutron Transport Theory.pdf}
+}
+
+@article{ANDRS2026110001,
+  title        = {{{OpenSn}}: {{A}} Massively Parallel, Open-Source Simulation Environment for Discrete Ordinates Radiation Transport},
+  author       = {Andrs, David and Hardy, Zachary and Hawkins, Daryl and Morel, Jim and Nguyen, Dinh Quoc Dang and Ragusa, Jean C.},
+  date         = {2026},
+  journaltitle = {Computer Physics Communications},
+  volume       = {320},
+  pages        = {110001},
+  issn         = {0010-4655},
+  doi          = {10.1016/j.cpc.2025.110001},
+  url          = {https://www.sciencedirect.com/science/article/pii/S0010465525005028},
+  abstract     = {OpenSn is an open-source, massively parallel deterministic radiation transport code for solving the discrete-ordinates (SN) form of the Boltzmann transport equation on unstructured, arbitrary polyhedral meshes. It supports high-fidelity simulations involving steady-state, eigenvalue, and adjoint problems for neutral particles (e.g., neutrons, photons, multi-particles), using the multigroup approximation in energy. OpenSn combines angular discretization via discrete ordinates with a discontinuous Galerkin finite element method (DGFEM) in space, enabling accurate resolution of transport physics on arbitrary polyhedral cells, included locally refined spatial grids. It includes multiple angular quadrature types, including locally refined angular quadratures. Written in modern C++ with a Python API, OpenSn runs efficiently on platforms ranging from laptops to supercomputers. The transport sweep algorithm is implemented using a task-based, directed-acyclic-graph (DAG) approach for each angle and supports asynchronous parallelism across thousands of MPI ranks. Group-set aggregation improves compute intensity, and synthetic acceleration techniques (e.g., diffusion synthetic acceleration, second-moment method) enhance solver convergence. OpenSn has been verified on reactor physics problems and demonstrated excellent weak and strong scaling performance on more than 32,768 processes, making it a versatile and robust platform for large-scale transport simulations in complex geometries. PROGRAM SUMMARY Program Title: OpenSn CPC Library link to program files: https://doi.org/10.17632/gvrs69dzcv.1 Developer’s repository link: https://github.com/Open-Sn/OpenSn Licensing provisions: MIT license Programming language: C++ (core), Python (API) Supplementary material: User manual, theory documentation, and tutorial notebooks available at https://open-sn.github.io/opensn/ Nature of problem:Radiation transport simulations are central to numerous applications in physics and engineering, including reactor analysis, shielding, radiography, and detector modeling. Solving the linear Boltzmann transport equation in its discrete-ordinates form (SN) on complex geometries requires robust numerical methods and scalable parallel algorithms. Many existing codes are closed-source, lack support for polyhedral meshes, or do not efficiently exploit modern HPC systems. A flexible, open-source tool is needed to address these challenges while supporting methodological innovation and large-scale computation. Solution method:OpenSn solves the steady-state, eigenvalue, and adjoint forms of the discrete-ordinates Boltzmann transport equation [1] using a multigroup approximation in energy, a discontinuous Galerkin finite element method (DGFEM) in space, and a collocation method in angle. It supports arbitrary unstructured polygonal and polyhedral meshes, and angular quadrature sets. Transport sweeps are implemented using a directed-acyclic-graph (DAG)-based task execution model, enabling highly scalable MPI-based parallelism [2]. The code is written in C++ and provides a Python interface for pre- and post-processing. Acceleration techniques [3,4], including diffusion synthetic acceleration (DSA) and second-moment-based methods, are incorporated to improve convergence. OpenSn has been tested on thousands of cores and verified against known benchmarks. Additional comments including restrictions and unusual features:OpenSn is designed as a research-grade, extensible platform for high-fidelity radiation transport simulations. It is particularly well suited for users interested in experimenting with new numerical methods, mesh types, and solver acceleration strategies. The code has minimal external dependencies, uses CMake for building, and includes example problems and tutorials. GPU acceleration is under development. No unusual restrictions are imposed on problem size, but large-scale simulations require access to parallel computing resources. References:1.E. E. Lewis and W. F. Miller, Computational Methods of Neutron Transport, ANS, 1993.2.J. I. C. Vermaak, J. C. Ragusa, M. L. Adams, and J. E. Morel., “Massively parallel transport sweeps on meshes with cyclic dependencies,” Journal of Computational Physics, 425:109892, 2021.3.M. L. Adams and E. W. Larsen, “Fast iterative methods for discrete ordinates particle transport calculations,” Prog. Nucl. Energy, 40(1): 3–159, 2002.4.B. Turcksin and J. C. Ragusa, “Discontinuous diffusion synthetic acceleration for SN transport on 2D arbitrary polygonal meshes,”Journal of Computational Physics, 274:356-369, 2014.},
+  keywords     = {Discrete-ordinate method,Massively parallel simulations,Open-source,Radiation transport}
+}
+
+@report{anlArgonneCodeCenter1977,
+  title       = {Argonne Code Center: {{Benchmark}} Problem Book.},
+  author      = {(ANL), Argonne National Laboratory},
+  date        = {1977-06},
+  institution = {Argonne National Laboratory (ANL), Argonne, IL (United States)},
+  location    = {United States},
+  doi         = {10.2172/12030251},
+  url         = {https://www.osti.gov/biblio/12030251},
+  file        = {/home/liamp2/Zotero/storage/R6UKZUZ7/12030251.pdf}
+}
+
+@article{barbarinoAssessmentPerformanceSpectral2014,
+  title        = {Assessment of the Performance of the Spectral Element Method Applied to Neutron Transport Problems},
+  author       = {Barbarino, A. and Dulla, S. and Mund, E.H. and Ravetto, P.},
+  date         = {2014},
+  journaltitle = {Annals of Nuclear Energy},
+  volume       = {65},
+  pages        = {190--198},
+  issn         = {0306-4549},
+  doi          = {10.1016/j.anucene.2013.10.004},
+  url          = {https://www.sciencedirect.com/science/article/pii/S0306454913005343},
+  abstract     = {The spectral element method can be used to deal with the spatial operators of neutron transport problems with high efficiency, as shown recently in the framework of the second-order AN transport approximation. The results highlight interesting computational features and show the appeal of the scheme for reactor physics applications. In this paper we investigate the numerical performance of the method in detail. In order to carry out an accurate monitoring of the error behavior to levels close to numerical round-off, we use benchmark problems with known analytical solutions, or with manufactured solutions. Manufactured solutions can easily be obtained for source-injected problems, by tailoring the external neutron source and the boundary conditions to a pre-established analytical solution for a given system. The results presented prove the effectiveness of the method and the high level of accuracy that can be attained.},
+  keywords     = {Manufactured solutions,Neutron transport,Reactor physics,Spectral elements},
+  file         = {/home/liamp2/Zotero/storage/MCCYBEBR/Barbarino et al. - 2014 - Assessment of the performance of the spectral element method applied to neutron transport problems.pdf}
+}
+
+@article{barbarinoSpectralElementMethod2013,
+  title        = {The Spectral Element Method for Static Neutron Transport in {{AN}} Approximation. {{Part I}}},
+  author       = {Barbarino, A. and Dulla, S. and Mund, E.H. and Ravetto, P.},
+  date         = {2013},
+  journaltitle = {Annals of Nuclear Energy},
+  volume       = {53},
+  pages        = {372--380},
+  issn         = {0306-4549},
+  doi          = {10.1016/j.anucene.2012.10.013},
+  url          = {https://www.sciencedirect.com/science/article/pii/S0306454912004100},
+  abstract     = {Spectral elements methods provide very accurate solutions of elliptic problems. In this paper we apply the method to the AN (i.e. SP2N−1) approximation of neutron transport. Numerical results for classical benchmark cases highlight its performance in comparison with finite element computations, in terms of accuracy per degree of freedom and convergence rate. All calculations presented in this paper refer to two-dimensional problems. The method can easily be extended to three-dimensional cases. The results illustrate promising features of the method for more complex transport problems.},
+  keywords     = {Neutron transport,Spectral element methods,Variational methods},
+  file         = {/home/liamp2/Zotero/storage/3PKYQ4EJ/Barbarino et al. - 2013 - The spectral element method for static neutron transport in AN approximation. Part I.pdf}
+}
+
+@article{barbarinoSpectralElementMethod2015,
+  title        = {The Spectral Element Method for Static Neutron Transport in {{AN}} Approximation. {{Part II}}},
+  author       = {Barbarino, A. and Dulla, S. and Mund, E.H. and Ravetto, P.},
+  date         = {2015},
+  journaltitle = {Annals of Nuclear Energy},
+  volume       = {86},
+  pages        = {108--115},
+  issn         = {0306-4549},
+  doi          = {10.1016/j.anucene.2015.04.015},
+  url          = {https://www.sciencedirect.com/science/article/pii/S0306454915002078},
+  abstract     = {This paper is the second part of an investigation on the use of the spectral element method (sem) to solve neutron transport problems in the AN approximation. Part I of the study contained a description of the sem variational approach of the AN equations applied to classical assembly benchmark problems. Part II deals with the sem solution of these equations in reactor cells. To cope with the cell geometry we apply a mapping technique from curved to square domains based on transfinite interpolation. Benchmark exercises – based on the method of characteristics – on the scale of fuel cells give a further confirmation of the computation advantages of the sem-AN approach in comparison with classical low-order computational techniques.},
+  keywords     = {Neutron transport,Nuclear fuel cell,Spectral elements,Transfinite interpolation},
+  file         = {/home/liamp2/Zotero/storage/IECHTZZT/Barbarino et al. - 2015 - The spectral element method for static neutron transport in AN approximation. Part II.pdf}
+}
+
+@book{bellNuclearReactorTheory1970,
+  title     = {Nuclear {{Reactor Theory}}},
+  author    = {Bell, George and Glasstone, Samuel},
+  date      = {1970},
+  edition   = {First Edition},
+  publisher = {Van Nostrand Reinhold Company},
+  url       = {https://www.osti.gov/servlets/purl/4074688},
+  isbn      = {978-0-442-20684-0},
+  file      = {/home/liamp2/Zotero/storage/C9T7BE36/bell-and-glasstone.pdf}
+}
+
+@article{bello-maldonadoScalableLowOrderFinite2019,
+  title        = {Scalable {{Low-Order Finite Element Preconditioners}} for {{High-Order Spectral Element Poisson Solvers}}},
+  author       = {Bello-Maldonado, Pedro D. and Fischer, Paul F.},
+  date         = {2019-01},
+  journaltitle = {SIAM Journal on Scientific Computing},
+  shortjournal = {SIAM J. Sci. Comput.},
+  volume       = {41},
+  number       = {5},
+  pages        = {S2-S18},
+  issn         = {1064-8275, 1095-7197},
+  doi          = {10.1137/18M1194997},
+  url          = {https://epubs.siam.org/doi/10.1137/18M1194997},
+  urldate      = {2026-07-31},
+  abstract     = {Low-order finite element (FE) systems are considered as preconditioners for spectral element (SE) discretizations of the Poisson problem in canonical and complex domains. The FE matrices are based on the same mapped set of Gauss–Lobatto–Legendre (GLL) points as the SE discretization. Three di↵erent versions of the preconditioner based on combinations of the low-order sti↵ness and mass matrices are tested for 2D and 3D geometries. When building the preconditioning operators, a new meshing approach that allows elements to overlap without needing to fill out the volume of the mesh is explored and shown to be better than traditional schemes. These preconditioners are robust with respect to cell aspect ratio, demonstrate bounded iteration counts with hand p-refinement, and have lower iteration counts than scalable hybrid-Schwarz multigrid schemes currently used in production-level SE simulations. Overall costs for large-scale parallel applications are dependent on fast and robust solvers for the sparse FE systems. Algebraic multigrid is shown to o↵er a pathway to realizing a robust and fast preconditioning strategy in this context.},
+  langid       = {english},
+  file         = {/home/liamp2/Zotero/storage/VG57H6LY/Bello-Maldonado and Fischer - 2019 - Scalable Low-Order Finite Element Preconditioners for High-Order Spectral Element Poisson Solvers.pdf}
+}
+
+@book{BenchmarkDeterministicTransport2005,
+  title      = {Benchmark on Deterministic Transport Calculations without Spatial Homogenisation: {{MOX}} Fuel Assembly 3-{{D}} Extendion Case},
+  shorttitle = {Benchmark on Deterministic Transport Calculations without Spatial Homogenisation},
+  date       = {2005},
+  publisher  = {OECD Nuclear Energy Agency},
+  location   = {Paris},
+  isbn       = {978-92-64-01069-7},
+  langid     = {english},
+  file       = {/home/liamp2/Zotero/storage/ZS7GM8HR/2005 - Benchmark on deterministic transport calculations without spatial homogenisation MOX fuel assembly.pdf}
+}
+
+@article{buchanInnerElementSubgridScale2010,
+  title        = {The {{Inner-Element Subgrid Scale Finite Element Method}} for the {{Boltzmann Transport Equation}}},
+  author       = {Buchan, Andrew G. and Candy, Adam S. and Merton, Simon R. and Pain, Christopher C. and Hadi, Justin I. and Eaton, Matthew D. and Goddard, Anthony J. H. and Smedley-Stevenson, Richard P. and Pearce, Gregory J.},
+  date         = {2010-02},
+  journaltitle = {Nuclear Science and Engineering},
+  shortjournal = {Nuclear Science and Engineering},
+  volume       = {164},
+  number       = {2},
+  pages        = {105--121},
+  issn         = {0029-5639, 1943-748X},
+  doi          = {10.13182/NSE08-82},
+  url          = {https://www.tandfonline.com/doi/full/10.13182/NSE08-82},
+  urldate      = {2026-10-13},
+  abstract     = {This paper presents a new multiscale radiation transport method based on a Galerkin finite element spatial discretization of the Boltzmann transport equation. The approach incorporates a discontinuous subgrid scale (SGS) solution within the continuous finite element representation of the spatial variables. While the conventional discontinuous Galerkin (DG) method provides accurate and numerically stable solutions that suppress unphysical oscillations, the number of unknowns is relatively high. The key advantage of the proposed SGS approach is that the solutions are represented within the continuous finite element space, and therefore, the number of unknowns compared with DG is relatively low.},
+  langid       = {english},
+  file         = {/home/liamp2/Zotero/storage/HVDHEP5P/Buchan et al. - 2010 - The Inner-Element Subgrid Scale Finite Element Method for the Boltzmann Transport Equation.pdf}
+}
+
+@book{deonHitchhikersGuideMulitple2022,
+  title    = {A {{Hitchhiker}}'s {{Guide}} to {{Mulitple Scattering}}},
+  author   = {family=Eon, given=Eugene, prefix=d', useprefix=true},
+  date     = {2022-11-25},
+  origdate = {2016-07-24},
+  edition  = {v0.3.2},
+  url      = {https://eugenedeon.com/hitchhikers},
+  file     = {/home/liamp2/Zotero/storage/3H7YHTEC/d'Eon - 2022 - A Hitchhiker's Guide to Mulitple Scattering.pdf}
+}
+
+@book{devilleHighorderMethodsIncompressible2002,
+  title     = {High-Order Methods for Incompressible Fluid Flow},
+  editor    = {Deville, Michel and Fischer, P. F. and Mund, E. H.},
+  date      = {2002},
+  series    = {Cambridge Monographs on Applied and Computational Mathematics},
+  number    = {9},
+  publisher = {Cambridge University Press},
+  location  = {Cambridge, UK New York},
+  abstract  = {This book considers the range of mathematical, engineering, and computer science topics that form the foundation of high-order numerical methods for the simulation of incompressible fluid flows in complex domains. Numerous examples are provided throughout to illustrate the capabilities of high-order methods in actual applications},
+  isbn      = {978-0-521-45309-7 978-0-511-03946-1 978-0-511-05284-2 978-0-511-09197-1 978-0-511-54679-2},
+  langid    = {english},
+  pagetotal = {499},
+  file      = {/home/liamp2/Zotero/storage/8L2H62NH/Deville et al. - 2002 - High-order methods for incompressible fluid flow.pdf}
+}
+
+@article{devilleIterativeSolutionIsoparametric1987,
+  title        = {Iterative Solution of Isoparametric Spectral Element Equations by Low-Order Finite Element Preconditioning},
+  author       = {Deville, M.O. and Mund, E.H. and Patera, A.T.},
+  date         = {1987-11},
+  journaltitle = {Journal of Computational and Applied Mathematics},
+  shortjournal = {Journal of Computational and Applied Mathematics},
+  volume       = {20},
+  pages        = {189--197},
+  issn         = {03770427},
+  doi          = {10.1016/0377-0427(87)90136-1},
+  url          = {https://linkinghub.elsevier.com/retrieve/pii/0377042787901361},
+  urldate      = {2026-06-04},
+  langid       = {english},
+  file         = {/home/liamp2/Zotero/storage/C3YVS9PE/Deville et al. - 1987 - Iterative solution of isoparametric spectral element equations by low-order finite element precondit.pdf}
+}
+
+@article{evans2010denovo,
+  title        = {Denovo: {{A}} New Three-Dimensional Parallel Discrete Ordinates Code in {{SCALE}}},
+  author       = {Evans, Thomas M and Stafford, Alissa S and Slaybaugh, Rachel N and Clarno, Kevin T},
+  date         = {2010},
+  journaltitle = {Nuclear Technology},
+  volume       = {171},
+  number       = {2},
+  pages        = {171--200},
+  publisher    = {Taylor \& Francis}
+}
+
+@book{fichtnerFullSeismicWaveform2011,
+  title     = {Full {{Seismic Waveform Modelling}} and {{Inversion}}},
+  author    = {Fichtner, Andreas},
+  date      = {2011},
+  series    = {Advances in {{Geophysical}} and {{Environmental Mechanics}} and {{Mathematics}}},
+  publisher = {Springer Berlin Heidelberg},
+  location  = {Berlin, Heidelberg},
+  doi       = {10.1007/978-3-642-15807-0},
+  url       = {https://link.springer.com/10.1007/978-3-642-15807-0},
+  urldate   = {2026-07-24},
+  isbn      = {978-3-642-15806-3 978-3-642-15807-0},
+  langid    = {english},
+  file      = {/home/liamp2/Zotero/storage/NG8ZCL5T/Fichtner - 2011 - Full Seismic Waveform Modelling and Inversion.pdf}
+}
+
+@article{fischerNekRSGPUacceleratedSpectral2022,
+  title        = {{{NekRS}}, a {{GPU}}-Accelerated Spectral Element {{Navier}}–{{Stokes}} Solver},
+  author       = {Fischer, Paul and Kerkemeier, Stefan and Min, Misun and Lan, Yu-Hsiang and Phillips, Malachi and Rathnayake, Thilina and Merzari, Elia and Tomboulides, Ananias and Karakus, Ali and Chalmers, Noel and Warburton, Tim},
+  date         = {2022-12},
+  journaltitle = {Parallel Computing},
+  shortjournal = {Parallel Computing},
+  volume       = {114},
+  pages        = {102982},
+  issn         = {01678191},
+  doi          = {10.1016/j.parco.2022.102982},
+  url          = {https://linkinghub.elsevier.com/retrieve/pii/S0167819122000710},
+  urldate      = {2026-06-04},
+  abstract     = {The development of NekRS, a GPU-oriented thermal-fluids simulation code based on the spectral element method (SEM) is described. For performance portability, the code is based on the open concurrent compute abstraction and leverages scalable developments in the SEM code Nek5000 and in libParanumal, which is a library of high-performance kernels for high-order discretizations and PDE-based miniapps. Critical performance sections of the Navier–Stokes time advancement are addressed. Performance results on several platforms are presented, including scaling to 27,648 V100s on OLCF Summit, for calculations of up to 60B grid points (240B degrees-of-freedom).},
+  langid       = {english},
+  file         = {/home/liamp2/Zotero/storage/WAXWED2T/Fischer et al. - 2022 - NekRS, a GPU-accelerated spectral element Navier–Stokes solver.pdf}
+}
+
+@article{harbour2025moose,
+  title        = {4.0 {{MOOSE}}: {{Enabling}} Massively Parallel {{Multiphysics}} Simulation},
+  author       = {Harbour, Logan and Giudicelli, Guillaume and Lindsay, Alexander D. and German, Peter and Hansel, Joshua and Icenhour, Casey and Li, Mengnan and Miller, Jason M. and Stogner, Roy H. and Behne, Patrick and Yankura, Daniel and Prince, Zachary M. and DeChant, Corey and Schwen, Daniel and Spencer, Benjamin W. and Tano, Mauricio and Choi, Namjae and Wang, Yaqi and Nezdyur, Max and Miao, Yinbin and Hu, Tianchen and Kumar, Shikhar and Matthews, Christopher and Langley, Brandon and Nobre, Nuno and Blair, Alexander and MacMackin, Chris and Rocha, Henrique Bergallo and Palmer, Edward and Carter, Jesse and Meier, Jörg and Slaughter, Andrew E. and Andrš, David and Carlsen, Robert W. and Kong, Fande and Gaston, Derek R. and Permann, Cody J.},
+  date         = {2025},
+  journaltitle = {SoftwareX},
+  volume       = {31},
+  pages        = {102264},
+  issn         = {2352-7110},
+  doi          = {10.1016/j.softx.2025.102264},
+  url          = {https://www.sciencedirect.com/science/article/pii/S2352711025002316},
+  keywords     = {Engineering,Finite element,Finite volume,Modeling,Multiphysics,Simulation}
+}
+
+@book{hebertAppliedReactorPhysics2020,
+  title     = {Applied {{Reactor Physics}}},
+  author    = {Hébert, Alain},
+  date      = {2020},
+  edition   = {Third},
+  publisher = {Presses internationales Polytechnique},
+  location  = {Québec},
+  isbn      = {978-2-553-01735-3 978-2-553-01744-5},
+  langid    = {english},
+  pagetotal = {1}
+}
+
+@book{igelComputationalSeismologyPractical2016,
+  title     = {Computational Seismology: A Practical Introduction},
+  author    = {Igel, Heiner},
+  date      = {2016-11},
+  publisher = {Oxford University Press},
+  doi       = {10.1093/acprof:oso/9780198717409.001.0001},
+  url       = {https://doi.org/10.1093/acprof:oso/9780198717409.001.0001},
+  abstract  = {This volume is an introductory text to a range of numerical methods used today to simulate time-dependent processes in Earth science, physics, engineering, and many other fields. The physical problem of elastic wave propagation in 1D serves as a model system with which the various numerical methods are introduced and compared. The theoretical background is presented with substantial graphical material supporting the concepts. The results can be reproduced with the supplementary electronic material provided as Python codes embedded in Jupyter notebooks. The volume starts with a primer on the physics of elastic wave propagation, and a chapter on the fundamentals of parallel programming, computational grids, mesh generation, and hardware models. The core of the volume is the presentation of numerical solutions of the wave equation with six different methods: (1) the finite-difference method; (2) the pseudospectral method (Fourier and Chebyshev); (3) the linear finite-element method; (4) the spectral-element method; (5) the finite-volume method; and (6) the discontinuous Galerkin method. Each chapter contains comprehension questions, and theoretical and programming exercises. The volume closes with a discussion of domains of application and criteria for the choice of a specific numerical method, and the presentation of current challenges.},
+  isbn      = {978-0-19-871740-9}
+}
+
+@report{j.rowlandsLWRPinCell1999,
+  title       = {{{LWR Pin Cell Benchmark Intercomparisons}}},
+  namea       = {{J. Rowlands} and {A. Benslimane-Bouland} and {S. Cathalau,} and {F-X. Giffard} and {R. Jacqmin} and {G. Rimpault} and {W. Bernnat} and {M. Mattes} and {M. Coste} and {F. Fernex} and {C. Van der Gucht} and {P.F.A. de Leege} and {C.J. Dean} and {N. Smith} and {P. Finck} and {A. Hogenbirk} and {A. Trkov}},
+  nameatype   = {collaborator},
+  date        = {1999-09},
+  institution = {{Nuclear Energy Agency Organisation for Economic Co-operation and Development}},
+  url         = {https://www.oecd-nea.org/science/docs/pubs/pin_cell.pdf},
+  urldate     = {2026-02-25},
+  file        = {/home/liamp2/Zotero/storage/ZDU5UMDJ/J. Rowlands et al. - LWR Pin Cell Benchmark Intercomparisons.pdf}
+}
+
+@article{KARNIADAKIS1990367,
+  title        = {Spectral Element-{{Fourier}} Methods for Incompressible Turbulent Flows},
+  author       = {Karniadakis, G.E.},
+  date         = {1990},
+  journaltitle = {Computer Methods in Applied Mechanics and Engineering},
+  volume       = {80},
+  number       = {1},
+  pages        = {367--380},
+  issn         = {0045-7825},
+  doi          = {10.1016/0045-7825(90)90041-J},
+  url          = {https://www.sciencedirect.com/science/article/pii/004578259090041J},
+  abstract     = {A mixed spectral element-(Fourier) spectral method is proposed for solution of the incompressible Navier-Stokes equations in general, curvilinear domains. The formulation is appropriate for simulations of turbulent flows in complex geometries with only one homogeneous flow direction. The governing equations are written in a form suitable for both direct (DNS) and large-eddy (LES) simulations allowing a unified implementation. The method is based on skew-symmetric convective operators that induce minimal aliasing errors and fast Helmholtz solvers that employ efficient iterative algorithms (e.g. multigrid). Direct numerical simulations of channel flow verified that the proposed method can sustain turbulent fluctuations even at ‘marginal’ Reynolds numbers. The flexibility of the method to efficiently simulate complex-geometry flows is demonstrated through an example of transitional flow in a grooved channel and an example of transitional-turbulent flow over rough wall surfaces.},
+  file         = {/home/liamp2/Zotero/storage/N7YQGKD5/Karniadakis - SPECTRAL ELEMENT-FOUR METHODS FOR ~CO~RESS~LE TURBULtENT FLOWS.pdf}
+}
+
+@article{larsenInternationalConferenceMathematics2011,
+  title        = {International {{Conference}} on {{Mathematics}} and {{Computational Methods Applied}} to {{Nuclear Science}} and {{Engineering}} ({{MC}} 2011)},
+  author       = {Larsen, Edward W.},
+  date         = {2011-10},
+  journaltitle = {Transport Theory and Statistical Physics},
+  shortjournal = {Transport Theory and Statistical Physics},
+  volume       = {40},
+  number       = {4},
+  pages        = {225--242},
+  issn         = {0041-1450, 1532-2424},
+  doi          = {10.1080/00411450.2011.610205},
+  url          = {http://www.tandfonline.com/doi/abs/10.1080/00411450.2011.610205},
+  urldate      = {2026-05-08},
+  abstract     = {In this paper a possible application of the Spectral Element Method to neutron transport problems is presented. The basic features of the numerical scheme on the one-dimensional diffusion equation are illustrated. Then, the AN model for neutron transport is introduced, and the basic steps for the construction of a bi-dimensional solver are described. The AN equations are chosen for their structure, involving a system of coupled elliptic-type equations. Some calculations are carried out on typical benchmark problems and results are compared with the Finite Element Method, in order to evaluate their performances.},
+  langid       = {english},
+  file         = {/home/liamp2/Zotero/storage/TMCYDUTY/Larsen - 2011 - International Conference on Mathematics and Computational Methods Applied to Nuclear Science and Eng.pdf}
+}
+
+@article{lathropRayEffectsDiscrete1968a,
+  title        = {Ray {{Effects}} in {{Discrete Ordinates Equations}}},
+  author       = {Lathrop, K. D.},
+  date         = {1968-06-01},
+  journaltitle = {Nuclear Science and Engineering},
+  volume       = {32},
+  number       = {3},
+  pages        = {357--369},
+  publisher    = {Taylor \& Francis},
+  issn         = {0029-5639},
+  doi          = {10.13182/NSE68-4},
+  url          = {https://doi.org/10.13182/NSE68-4},
+  urldate      = {2026-10-19},
+  abstract     = {The nature of anomalous computational effects due to the discretization of the angular variable in transport theory discrete ordinates approximations is described and analyzed. The origin of these effects within the derivation of the Sn discrete ordinates equations is shown, and the effects are related to the non-equivalence of the general geometry discrete ordinates equations and the corresponding spherical harmonics equations. Procedures are given for the definition of two-dimensional discrete ordinates equations that are equivalent to the spherical harmonics equations. Elimination of ray effects from the two-dimensional S2 equations by reduction to the diffusion theory equations is verified in a numerical example. Recipes for the elimination of ray effects are analyzed in the analytic solution of the infinite medium, isotropic line-source problem in the rectangular geometry, S2 approximation. Optimum magnitudes for corrective source terms are indicated by the analysis. It is concluded that ray effects may be eliminated by modification of the discrete ordinates formulation, but that the extra computational effort may be more expensive than the alternative of increasing the order of angular quadrature and that the presence of discretization effects may serve as an indicator of the adequacy of the angular quadrature used.},
+  file         = {/home/liamp2/Zotero/storage/6A86BUIC/Lathrop - 1968 - Ray Effects in Discrete Ordinates Equations.pdf}
+}
+
+@article{lathropRemediesRayEffects1971,
+  title        = {Remedies for {{Ray Effects}}},
+  author       = {Lathrop, K. D.},
+  date         = {1971-09-01},
+  journaltitle = {Nuclear Science and Engineering},
+  volume       = {45},
+  number       = {3},
+  pages        = {255--268},
+  publisher    = {Taylor \& Francis},
+  issn         = {0029-5639},
+  doi          = {10.13182/NSE45-03-255},
+  url          = {https://doi.org/10.13182/NSE45-03-255},
+  urldate      = {2026-10-19},
+  abstract     = {Remedies are considered for the ray effect, a flux distortion producing defect of the discrete ordinates approximation to the transport equation. The partially effective remedies of increasing the number of directions, selecting quadrature sets invariant under discrete rotations, and introducing coupling terms into the representation of the transport divergence operator are considered. Numerical results are presented showing the effectiveness of these remedies in a standard test problem. Remedies that eliminate the ray effect are also considered. We show how to formulate multidimensional discrete ordinate equations equivalent to spherical harmonic equations and relate the order of the equivalent spherical harmonic equations to the degree of precision of the numerical quadrature. We give numerical results for this kind of remedy in three test problems, including one with material discontinuities. We show how the use of orthonormal polynomials permits the formulation of discrete ordinates approximations which have properties “like” those of the highest order spherical harmonic equations consistent with the number of directions in the discrete ordinates approximation. We find that these formulations also eliminate ray effects. We conclude that the partially effective remedy of using more, specially chosen, directions is the most practical remedy for most applications, but that for especially difficult situations or for reference calculations, the defect-eliminating spherical harmonic-like formulations should be available for use.},
+  file         = {/home/liamp2/Zotero/storage/QDBPYPQM/Lathrop - 1971 - Remedies for Ray Effects.pdf}
+}
+
+@article{lebedevSphericalQuadratureFormulas1977,
+  title        = {Spherical Quadrature Formulas Exact to Orders 25–29},
+  author       = {Lebedev, V. I.},
+  date         = {1977-01-01},
+  journaltitle = {Siberian Mathematical Journal},
+  shortjournal = {Sib Math J},
+  volume       = {18},
+  number       = {1},
+  pages        = {99--107},
+  issn         = {1573-9260},
+  doi          = {10.1007/BF00966954},
+  url          = {https://doi.org/10.1007/BF00966954},
+  urldate      = {2026-10-22},
+  langid       = {english},
+  keywords     = {Quadrature Formula,Spherical Quadrature}
+}
+
+@article{lewisBenchmarkSpecificationDeterministic2001,
+  title  = {Benchmark Specification for {{Deterministic}} 2-{{D}}/3-{{D MOX}} Fuel Assembly Transport Calculations without Spatial Homogenisation ({{C5G7 MOX}})},
+  author = {Lewis, E E and Smith, M A and Tsoulfanidis, N and Palmiotti, G and Taiwo, T A and Blomquist, R N},
+  date   = {2001},
+  langid = {english},
+  file   = {/home/liamp2/Zotero/storage/KB3S58VB/Lewis et al. - 2001 - Benchmark specification for Deterministic 2-D3-D MOX fuel assembly transport calculations without s.pdf}
+}
+
+@article{lewisBenchmarkSpecificationDeterministic2001a,
+  title  = {Benchmark Specification for {{Deterministic}} 2-{{D}}/3-{{D MOX}} Fuel Assembly Transport Calculations without Spatial Homogenisation},
+  author = {Lewis, E E and Smith, M A and Tsoulfanidis, N and Palmiotti, G and Taiwo, T A and Blomquist, R N},
+  date   = {2001},
+  langid = {english},
+  file   = {/home/liamp2/Zotero/storage/A46WIAMA/Lewis et al. - 2001 - Benchmark specification for Deterministic 2-D3-D MOX fuel assembly transport calculations without s.pdf}
+}
+
+@book{lewisComputationalMethodsNeutron1993,
+  title     = {Computational {{Methods}} of {{Neutron Transport}}},
+  author    = {Lewis, E.E. and Miller, W. F.},
+  date      = {1993},
+  publisher = {American Nuclear Society, Inc.},
+  isbn      = {0-89448-452-4},
+  file      = {/home/liamp2/Zotero/storage/NW5UI6FN/computational_methods_lewis_miller.pdf}
+}
+
+@thesis{liscum-powellFiniteElementNumerical2000,
+  type        = {phdthesis},
+  title       = {Finite {{Element Numerical Soluation}} of a {{Self-Adjoint Transport Equation}} for {{Coupled Electron-Photon Problems}}},
+  author      = {Liscum-Powell, Jennifer},
+  date        = {2000-08},
+  institution = {University of New Mexico},
+  location    = {Albuquerque, New Mexico},
+  url         = {https://www.osti.gov/servlets/purl/760742},
+  urldate     = {2026-06-24},
+  langid      = {english},
+  file        = {/home/liamp2/Zotero/storage/7B9RMKHY/760742.pdf}
+}
+
+@article{liscum-powellFiniteElementSolution2002,
+  title        = {Finite {{Element Solution}} of the {{Self-Adjoint Angular Flux Equation}} for {{Coupled Electron-Photon Transport}}},
+  author       = {Liscum-Powell, Jennifer L. and Prinja, Anil B. and Morel, Jim E. and Lorence Jr., Leonard J.},
+  date         = {2002-11-01},
+  journaltitle = {Nuclear Science and Engineering},
+  volume       = {142},
+  number       = {3},
+  pages        = {270--291},
+  publisher    = {Taylor \& Francis},
+  issn         = {0029-5639},
+  doi          = {10.13182/NSE142-270},
+  url          = {https://doi.org/10.13182/NSE142-270},
+  urldate      = {2026-06-24},
+  abstract     = {A novel approach is proposed for charged particle transport calculations using a recently developed second-order, self-adjoint angular flux (SAAF) form of the Boltzmann transport equation with continuous slowing-down. A finite element discretization that is linear continuous in space and linear discontinuous (LD) in energy is described and implemented in a one-dimensional, planar geometry, multigroup, discrete ordinates code for charged particle transport. The cross-section generating code CEPXS is used to generate the electron and photon transport cross sections employed in this code. The discrete ordinates SAAF transport equation is solved using source iteration in conjunction with an inner iteration acceleration scheme and an outer iteration acceleration scheme. Outer iterations are required with the LD energy discretization scheme because the two angular flux unknowns within each group are coupled, which gives rise to effective upscattering. The inner iteration convergence is accelerated using diffusion synthetic acceleration, and the outer iteration convergence is accelerated using a diamond difference approximation to the LD energy discretization. Computational results are given that demonstrate the effectiveness of our convergence acceleration schemes and the accuracy of our discretized SAAF equation.},
+  file         = {/home/liamp2/Zotero/storage/R8N6W99J/Liscum-Powell et al. - 2002 - Finite Element Solution of the Self-Adjoint Angular Flux Equation for Coupled Electron-Photon Transp.pdf}
+}
+
+@article{mitchellDiscontinuousBubnovGalerkinSpectral2026,
+  title        = {A Discontinuous {{Bubnov-Galerkin}} Spectral Element Spatial Discretisation of the First-Order Form of the Neutron Transport Equation Using a Discrete Ordinate Angular Discretisation with Multidimensional Anisotropic Dispersion and Dissipation Analysis},
+  author       = {Mitchell, J.I. and Eaton, M.D. and Moura, R.C. and Jones, C. and Wilson, S.G. and Latimer, C. and Kópházi, J.},
+  date         = {2026-12},
+  journaltitle = {Annals of Nuclear Energy},
+  shortjournal = {Annals of Nuclear Energy},
+  volume       = {239},
+  pages        = {112630},
+  issn         = {03064549},
+  doi          = {10.1016/j.anucene.2026.112630},
+  url          = {https://linkinghub.elsevier.com/retrieve/pii/S0306454926005189},
+  urldate      = {2026-09-18},
+  abstract     = {In this paper, the discontinuous Bubnov-Galerkin spectral element method (DBG-SEM) has been used to spatially discretise the first order form of the neutron transport (FONT) equation. A discrete ordinate (SN) approximation is also used to discretise the angular variables and the multigroup approximation has been used to discretise the energy variable. The DBG-SEM has been compared against the discontinuous BubnovGalerkin finite element method (DBG-FEM) using two benchmark verification test cases. This is the first time that a detailed comparison of DBG-SEM and DBG-FEM has been completed in the context of the FONT equation. The method of manufactured solutions (MMS) has been used to investigate the convergence rate of the proposed discretisation schemes. This demonstrates that both the DBG-SEM and DBG-FEM yield the same rate of convergence with increasing polynomial order. Both the DBG-SEM and DBG-FEM were used to solve the OECD/NEA two-dimensional (2D) C5G7 nuclear reactor physics benchmark verification test case. Again both methods yield a similar level of numerical accuracy using both straight-sided and curvilinear elements. This analysis of the local element matrix condition number demonstrates that the DBG-SEM yields a lower condition number than the DBG-FEM. Finally, multidimensional anisotropic dispersion and dissipation analysis (MA-DDA) was utilised to understand the dispersion and dissipation errors of the DBG-SEM and DBG-FEM. This is the first time that DDA has been utilised for analysing the dispersive and dissipative properties of spatial discretisation methods for the FONT equation in multidimensions. This analysis demonstrated that the DBG-SEM and DBG-FEM have similar dispersion and dissipative behaviour when exact element integration was used, which is an expected result.},
+  langid       = {english},
+  file         = {/home/liamp2/Zotero/storage/48Z6Z8DT/Mitchell et al. - 2026 - A discontinuous Bubnov-Galerkin spectral element spatial discretisation of the first-order form of t.pdf}
+}
+
+@article{morelAnalysisRayEffectMitigation2003,
+  title        = {Analysis of {{Ray-Effect Mitigation Techniques}}},
+  author       = {Morel, J. E. and Wareing, T. A. and Lowrie, R. B. and Parsons, D. K.},
+  date         = {2003-05-01},
+  journaltitle = {Nuclear Science and Engineering},
+  volume       = {144},
+  number       = {1},
+  pages        = {1--22},
+  publisher    = {Taylor \& Francis},
+  issn         = {0029-5639},
+  doi          = {10.13182/NSE01-48},
+  url          = {https://doi.org/10.13182/NSE01-48},
+  urldate      = {2026-10-13},
+  abstract     = {We analyze three ray-effect mitigation techniques in two-dimensional x-y geometry. In particular, two angular finite element methods, and the modulated P1-equivalent S2 method, are analyzed. It is found that these techniques give varying levels of ray-effect mitigation on certain traditional test problems, but all of them yield discrete-ray solutions for a line source in a void. In general, it is shown that any transport angular discretization technique that results in a hyperbolic approximation for the directional gradient operator will yield a discrete-ray solution for a line source in a void. Since the directional gradient operator is in fact hyperbolic, it is not surprising that many discretizations of the operator retain this property. For instance, our results suggest that both continuous and discontinuous angular finite element methods produce hyperbolic approximations. Our main conclusion is that the effectiveness of any hyperbolic ray-effect mitigation technique will necessarily be highly problem dependent. In particular, such techniques must fail in problems that have the most severe ray effects, i.e., those that are “similar” to a line source in a void.},
+  file         = {/home/liamp2/Zotero/storage/BHDR2APE/Morel et al. - 2003 - Analysis of Ray-Effect Mitigation Techniques.pdf}
+}
+
+@article{morelSelfAdjointAngularFlux1999,
+  title        = {A {{Self-Adjoint Angular Flux Equation}}},
+  author       = {Morel, J. E. and McGhee, J. M.},
+  date         = {1999-07-01},
+  journaltitle = {Nuclear Science and Engineering},
+  volume       = {132},
+  number       = {3},
+  pages        = {312--325},
+  publisher    = {Taylor \& Francis},
+  issn         = {0029-5639},
+  doi          = {10.13182/NSE132-312},
+  url          = {https://doi.org/10.13182/NSE132-312},
+  urldate      = {2026-05-16},
+  abstract     = {The traditional second-order self-adjoint forms of the transport equation are the even- and odd-parity equations. A useful alternative to these equations exists in the form of a second-order self-adjoint equation that has the angular flux as its unknown. The numerical advantages and disadvantages of this equation are contrasted both theoretically and computationally with those of the even- and odd-parity equations.},
+  file         = {/home/liamp2/Zotero/storage/77D5JPCB/Morel and McGhee - 1999 - A Self-Adjoint Angular Flux Equation.pdf}
+}
+
+@article{mundSpectralElementSolutions2011,
+  title        = {Spectral Element Solutions for the {{PN}} Neutron Transport Equations},
+  author       = {Mund, E.H.},
+  date         = {2011-04},
+  journaltitle = {Computers \& Fluids},
+  shortjournal = {Computers \& Fluids},
+  volume       = {43},
+  number       = {1},
+  pages        = {102--106},
+  issn         = {00457930},
+  doi          = {10.1016/j.compfluid.2010.06.010},
+  url          = {https://linkinghub.elsevier.com/retrieve/pii/S0045793010001416},
+  urldate      = {2026-06-04},
+  abstract     = {This paper discusses the application of the Legendre spectral element method to the steady one-velocity PN equations describing neutron transport in a one-dimensional heterogeneous slab. Emphasis is put on the implementation of the method. Some key elements related to its efficiency are analyzed to prepare further developments in higher dimensions to evaluate benchmark solutions to the simplified PN equations.},
+  langid       = {english},
+  file         = {/home/liamp2/Zotero/storage/5ZHN24HW/Mund - 2011 - Spectral element solutions for the PN neutron transport equations.pdf}
+}
+
+@article{novak2022_cardinal,
+  title        = {Coupled {{Monte Carlo}} and Thermal-Fluid Modeling of High Temperature Gas Reactors Using {{Cardinal}}},
+  author       = {Novak, A.J. and Andrs, D. and Shriwise, P. and Fang, J. and Yuan, H. and Shaver, D. and Merzari, E. and Romano, P.K. and Martineau, R.C.},
+  date         = {2022},
+  journaltitle = {Annals of Nuclear Energy},
+  volume       = {177},
+  pages        = {109310},
+  doi          = {10.1016/j.anucene.2022.109310},
+  url          = {https://www.sciencedirect.com/science/article/pii/S0306454922003450}
+}
+
+@article{painSpaceTimeStreamline2006,
+  title        = {Space–Time Streamline Upwind {{Petrov}}–{{Galerkin}} Methods for the {{Boltzmann}} Transport Equation},
+  author       = {Pain, C.C. and Eaton, M.D. and Smedley-Stevenson, R.P. and Goddard, A.J.H. and Piggott, M.D. and De Oliveira, C.R.E.},
+  date         = {2006-07},
+  journaltitle = {Computer Methods in Applied Mechanics and Engineering},
+  shortjournal = {Computer Methods in Applied Mechanics and Engineering},
+  volume       = {195},
+  number       = {33--36},
+  pages        = {4334--4357},
+  issn         = {00457825},
+  doi          = {10.1016/j.cma.2005.09.005},
+  url          = {https://linkinghub.elsevier.com/retrieve/pii/S0045782505004214},
+  urldate      = {2026-10-13},
+  abstract     = {This paper presents a space–time streamline upwind Petrov–Galerkin formulation for the time-dependent Boltzmann transport equation. Conventional linear space–time formulations typically take the distance across space–time elements as the representative distance across which dissipation is introduced. The proposed method however, calculates the representative distances based on the gradient of the solution in space–time. Therefore, the method in its most general form is non-linear. The calculation of distances based on the solution gradient means that even if small time-steps are used the method will attempt to optimise the numerical accuracy while eliminating any spurious oscillations.},
+  langid       = {english},
+  file         = {/home/liamp2/Zotero/storage/Z4457INB/Pain et al. - 2006 - Space–time streamline upwind Petrov–Galerkin methods for the Boltzmann transport equation.pdf}
+}
+
+@article{painStreamlineUpwindPetrov2006,
+  title        = {Streamline Upwind {{Petrov}}–{{Galerkin}} Methods for the Steady-State {{Boltzmann}} Transport Equation},
+  author       = {Pain, C.C. and Eaton, M.D. and Smedley-Stevenson, R.P. and Goddard, A.J.H. and Piggott, M.D. and De Oliveira, C.R.E.},
+  date         = {2006-07},
+  journaltitle = {Computer Methods in Applied Mechanics and Engineering},
+  shortjournal = {Computer Methods in Applied Mechanics and Engineering},
+  volume       = {195},
+  number       = {33--36},
+  pages        = {4448--4472},
+  issn         = {00457825},
+  doi          = {10.1016/j.cma.2005.09.004},
+  url          = {https://linkinghub.elsevier.com/retrieve/pii/S0045782505004202},
+  urldate      = {2026-10-13},
+  abstract     = {This paper describes Petrov–Galerkin finite element methods for solving the steady-state Boltzmann transport equation. The methods in their most general form are non-linear and therefore capable of accurately resolving sharp gradients in the solution field. In contrast to previously developed non-linear Petrov–Galerkin (shock-capturing) schemes the methods described in this paper are streamline based. The methods apply a finite element treatment for the internal domain and a Riemann approach on the boundary of the domain. This significantly simplifies the numerical application of the scheme by circumventing the evaluation of complex half-range angular integrals at the boundaries of the domain. The underlying linear Petrov–Galerkin scheme is compared with other Petrov–Galerkin methods found in the radiation transport literature such as those based on the self-adjoint angular flux equation (SAAF) [G.C. Pomraning, Approximate methods of solution of the monoenergetic Boltzmann equation, Ph.D. Thesis, MIT, 1962] and the even-parity (EP) equation [V.S. Vladmirov, Mathematical methods in the one velocity theory of particle transport, Atomic Energy of Canada Limited, Ontario, 1963]. The relationship of the linear method to Riemann methods is also explored.},
+  langid       = {english},
+  file         = {/home/liamp2/Zotero/storage/7IVNQ4V5/Pain et al. - 2006 - Streamline upwind Petrov–Galerkin methods for the steady-state Boltzmann transport equation.pdf}
+}
+
+@article{pateraSpectralElementMethod1984,
+  title        = {A Spectral Element Method for Fluid Dynamics: {{Laminar}} Flow in a Channel Expansion},
+  shorttitle   = {A Spectral Element Method for Fluid Dynamics},
+  author       = {Patera, Anthony T},
+  date         = {1984-06},
+  journaltitle = {Journal of Computational Physics},
+  shortjournal = {Journal of Computational Physics},
+  volume       = {54},
+  number       = {3},
+  pages        = {468--488},
+  issn         = {00219991},
+  doi          = {10.1016/0021-9991(84)90128-1},
+  url          = {https://linkinghub.elsevier.com/retrieve/pii/0021999184901281},
+  urldate      = {2026-06-04},
+  langid       = {english},
+  file         = {/home/liamp2/Zotero/storage/GLUFYZSZ/Patera - 1984 - A spectral element method for fluid dynamics Laminar flow in a channel expansion.pdf}
+}
+
+@article{romanoOpenMCStateoftheartMonte2015a,
+  title        = {{{OpenMC}}: {{A}} State-of-the-Art {{Monte Carlo}} Code for Research and Development},
+  author       = {Romano, Paul K. and Horelik, Nicholas E. and Herman, Bryan R. and Nelson, Adam G. and Forget, Benoit and Smith, Kord},
+  date         = {2015},
+  journaltitle = {Annals of Nuclear Energy},
+  volume       = {82},
+  pages        = {90--97},
+  issn         = {0306-4549},
+  doi          = {10.1016/j.anucene.2014.07.048},
+  url          = {https://www.sciencedirect.com/science/article/pii/S030645491400379X},
+  abstract     = {This paper gives an overview of OpenMC, an open source Monte Carlo particle transport code recently developed at the Massachusetts Institute of Technology. OpenMC uses continuous-energy cross sections and a constructive solid geometry representation, enabling high-fidelity modeling of nuclear reactors and other systems. Modern, portable input/output file formats are used in OpenMC: XML for input, and HDF5 for output. High performance parallel algorithms in OpenMC have demonstrated near-linear scaling to over 100,000 processors on modern supercomputers. Other topics discussed in this paper include plotting, CMFD acceleration, variance reduction, eigenvalue calculations, and software development processes.},
+  keywords     = {HDF5,Monte Carlo,Neutron transport,OpenMC,Parallel,XML}
+}
+
+@article{smithBenchmarkDeterministic2D2004,
+  title        = {Benchmark on Deterministic 2-{{D MOX}} Fuel Assembly Transport Calculationswithout Spatial Homogenization},
+  author       = {Smith, M. A. and Lewis, E. E. and Na, Byung-Chan},
+  date         = {2004-01-01},
+  journaltitle = {Progress in Nuclear Energy},
+  shortjournal = {Progress in Nuclear Energy},
+  series       = {Special {{Issue}}: {{OECD}}/{{NEA Benchmark}} on {{MOX}}-Fuelled {{Core Transport Calculations}} without {{Spatial Homogenisation}}},
+  volume       = {45},
+  number       = {2},
+  pages        = {107--118},
+  issn         = {0149-1970},
+  doi          = {10.1016/j.pnueene.2004.09.003},
+  url          = {https://www.sciencedirect.com/science/article/pii/S0149197003800057},
+  urldate      = {2025-10-15},
+  abstract     = {An important issue of deterministic transport methods for whole core calculations concerns the accuracy of homogenization techniques. A direct calculation for whole core heterogeneous geometries was not feasible in the past due to the limited capability of computers. With modern computational abilities, direct whole core heterogeneous calculations are becoming feasible. This paper explores a recent OECD/NEA benchmark problem proposed to test the accuracy of modern deterministic transport methods when applied to reactor core problems without spatial homogenization. For this work a two-dimensional configuration was investigated and an accurate Monte Carlo reference solution was obtained. Twenty participants submitted solutions for the two-dimensional configuration and all of the participant solutions were compared to a reference Monte Carlo solution. Overall all the results submitted by the participants agreed well with the reference solution. A majority of the participants obtained solutions that were more than acceptable for typical reactor calculations and the remaining errors in the participant solutions can be attributed to the high order space-angle approximation necessary to solve this particular benchmark problem. It is important to note that the high order space-angle approximation needed for this benchmark is not necessary typical for all such whole-core heterogeneous problems.},
+  keywords     = {C5G7,MOX,NEA Expert Group,OECD,two-dimensional benchmark},
+  file         = {/home/liamp2/Zotero/storage/5GNPFVKN/Smith et al. - 2004 - Benchmark on deterministic 2-D MOX fuel assembly transport calculationswithout spatial homogenizatio.pdf;/home/liamp2/Zotero/storage/8C9X75Z7/S0149197003800057.html}
+}
+
+@article{smithBenchmarkDeterministic3D2006,
+  title        = {Benchmark on Deterministic 3-{{D MOX}} Fuel Assembly Transport Calculations without Spatial Homogenization},
+  author       = {Smith, M. A. and Lewis, E. E. and Na, Byung-Chan},
+  date         = {2006-07-01},
+  journaltitle = {Progress in Nuclear Energy},
+  shortjournal = {Progress in Nuclear Energy},
+  series       = {{{OECD}}/{{NEA C5G7 MOX Benchmark}}: 3-{{D Extension Case}}},
+  volume       = {48},
+  number       = {5},
+  pages        = {383--393},
+  issn         = {0149-1970},
+  doi          = {10.1016/j.pnucene.2006.01.002},
+  url          = {https://www.sciencedirect.com/science/article/pii/S0149197006000151},
+  urldate      = {2025-10-15},
+  abstract     = {Within the framework of the OECD/NEA Expert Group on 3-D Radiation Transport Benchmarks, an international benchmark exercise for testing the ability of modern deterministic transport methods and codes to treat reactor problems without spatial homogenization was proposed in March 2001. That benchmark was completed in 2003 and the OECD report is available. As a follow-up to that benchmark, an extension of the 3-D calculations was proposed in May 2003 to provide a more challenging test of present day three-dimensional methods' ability to handle spatial homogeneities. Control rods were introduced, adding to the heterogeneity of the problems. The reactor core size was decreased to reduce the computational burden on all participants. Fourteen solutions were submitted for the new benchmark by 12 participants. All of the participant solutions were compared to a reference multigroup Monte Carlo solution. The analysis of results shows modern deterministic transport codes and methods can calculate the flux distribution reasonably well without relying upon spatial homogenization techniques, provided the domain size is small enough that the problem can be performed on available computing equipment.},
+  keywords     = {3-D Expert Group,MOX assembly,no spatial homogenization,OECD/NEA,three-dimensional transport benchmark},
+  file         = {/home/liamp2/Zotero/storage/XM76MDCA/Smith et al. - 2006 - Benchmark on deterministic 3-D MOX fuel assembly transport calculations without spatial homogenizati.pdf;/home/liamp2/Zotero/storage/8FKN2SNX/S0149197006000151.html}
+}
+
+@report{smithDIF3DVARIANT110Decade2014,
+  title       = {{{DIF3D-VARIANT}} 11.0: A Decade of Updates},
+  author      = {family=Smith, given=MA, given-i=MA and family=Lewis, given=EE, given-i=EE and family=Shemon, given=ER, given-i=ER},
+  date        = {2014},
+  institution = {Argonne National Lab.(ANL), Argonne, IL (United States)}
+}
+
+@article{zhangVariationalNodalApproach2017,
+  title        = {A {{Variational Nodal Approach}} to {{2D}}/{{1D Pin Resolved Neutron Transport}} for {{Pressurized Water Reactors}}},
+  author       = {Zhang, Tengfei and Lewis, E. E. and Smith, M. A. and Yang, W. S. and Wu, Hongchun},
+  date         = {2017-05-04},
+  journaltitle = {Nuclear Science and Engineering},
+  volume       = {186},
+  number       = {2},
+  pages        = {120--133},
+  publisher    = {Taylor \& Francis},
+  issn         = {0029-5639},
+  doi          = {10.1080/00295639.2016.1273023},
+  url          = {https://doi.org/10.1080/00295639.2016.1273023},
+  urldate      = {2026-09-29},
+  abstract     = {A two-dimensional/one-dimensional (2D/1D) variational nodal approach is presented for pressurized water reactor core calculations without fuel-moderator homogenization. A 2D/1D approximation to the within-group neutron transport equation is derived and converted to an even-parity form. The corresponding nodal functional is presented and discretized to obtain response matrix equations. Within the nodes, finite elements in the x-y plane and orthogonal functions in z are used to approximate the spatial flux distribution. On the radial interfaces, orthogonal polynomials are employed; on the axial interfaces, piecewise constants corresponding to the finite elements eliminate the interface homogenization that has been a challenge for method of characteristics (MOC)–based 2D/1D approximations. The angular discretization utilizes an even-parity integral method within the nodes, and low-order spherical harmonics (PN) on the axial interfaces. The x-y surfaces are treated with high-order PN combined with quasi-reflected interface conditions. The method is applied to the C5G7 benchmark problems and compared to Monte Carlo reference calculations.},
+  keywords     = {2D/1D variational nodal method,eliminating the interface homogenization},
+  file         = {/home/liamp2/Zotero/storage/YKGBQ88K/Zhang et al. - 2017 - A Variational Nodal Approach to 2D1D Pin Resolved Neutron Transport for Pressurized Water Reactors.pdf}
 }
