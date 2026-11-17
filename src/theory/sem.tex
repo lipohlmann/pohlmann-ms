@@ -1,0 +1,80 @@
+The within-group discrete ordinates equations within a uniform material can be written as:
+\begin{equation}
+  \label{eq:sn-eqs}
+  \underbrace{\ohat_{x,n}\pdv{\psing}{x}+\ohat_{y,n}\pdv{\psing}{y}+\ohat_{z,n}\pdv{\psing}{z}}_{\ohat_n\cdot\nabla\psing \rarg}+\Sigma_t^g \psing\rarg=q_n^g\rarg,\quad n\in \{1,2,\ldots,N\}.
+\end{equation}
+These equations are linked together via a quadrature set for the angle-integrated flux:
+\begin{equation}
+  \phi^g\rarg := \int_{4\pi}\psi^g\ro\odif{\ohat}\approx \sum_{n=1}^{N}w_n\psing \rarg.
+\end{equation}
+The source term in \cref{eq:sn-eqs} will be assumed to be comprised of scattering, fission, and an independent source:
+\begin{equation}
+  q_n^q\rarg:= \sum_{g'=1}^G \int_{4\pi}\Sigma_s^{g'\rightarrow g}\left(\rvec,\ohat'\cdot\ohat\right)\psi^{g'}\left(\rvec,\ohat'\right)\odif{\ohat'}+\frac{\chi^g}{4\pi \keff } \sum_{g'=1}^G  \nu^{g'}\Sigma_f^{g'}\phi^g\rarg+q^g_{\text{ind}}\left(\rvec,\ohat_n\right).
+\end{equation}
+Some important notes:
+\begin{itemize}
+  \item The double-difference scattering cross section within the scattering source is assumed to be only a function of scattering angle, not the incoming angle.
+  \item Delayed neutrons are not considered.
+\end{itemize}
+Going forward, we drop the $n$ and $g$ indices where it is obvious they are implied.
+
+First, we partition the spatial domain into $E$ non-overlapping subdomains of unstructured hexahedral elements.
+We then require \cref{eq:sn-eqs} to hold over each element.
+Multiplying \cref{eq:sn-eqs} by a test function, $v(x,y,z)$, integrating over all space, and applying vector identities we arrive at the weak form the of the \gls{fobte}:
+\begin{equation}
+  \label{eq:weak-form}
+  \oint v\psi\ohat\cdot\hat{n}\odif{S}-\int \psi\ohat\cdot\nabla v\odif{V}+\int\Sigma_t\psi v\odif{V}=\int qv\odif{V}
+\end{equation}
+
+Next, we approximate the discrete-ordinate, within-group angular flux and source with a spectral expansion using Lagrange polynomials:
+\begin{subequations}
+  \label{eq:spectral-expansion}
+  \begin{equation}
+    \psing\rarg\approx \sum_{i=0}^{P}\sum_{j=0}^{P}\sum_{k=0}^{P}\psi_{ijk}\ell_i\left(x\right)\ell_j\left(y\right)\ell_k\left(z\right)
+  \end{equation}
+  \begin{equation}
+    q_n^g\rarg \approx \sum_{i=0}^{P}\sum_{j=0}^{P}\sum_{k=0}^{P}q_{ijk}\ell_i\left(x\right)\ell_j\left(y\right)\ell_k\left(z\right)
+  \end{equation}
+\end{subequations}
+where the nodes of the Lagrange interpolants are selected to be the mapped nodes belonging to the $P$\textsuperscript{th}-order \gls{gll} quadrature set.
+From \cite{devilleHighorderMethodsIncompressible2002}:
+\begin{equation}
+  \label{eq:gll}
+  \begin{aligned}
+     & \int_{-1}^1 u(\xi)\odif{\xi} & \approx & \sum_{k=0}^{N}\rho_k u\left(\xi_k\right)                                  \\
+     & \xi_k                        & =       & \begin{cases}
+                                                  -1,                        & k=0              \\
+                                                  \text{zeros of }L'_N(\xi), & 1\leq k \leq N-1 \\
+                                                  1,                         & k=N              \\
+                                                \end{cases}                           \\
+     & \rho_k                       & =       & \frac{2}{N\left(N+1\right)}\frac{1}{\left[L_N\left(\xi_k\right)\right]^2}
+  \end{aligned}
+\end{equation}
+The above rule is exact for polynomials degree up to $2N-1$.
+Note that for $\rvec \in \mathbb{R}^n$, for $n>1$, a single quadrature set is created based on \cref{eq:gll}, then points are mapped to the higher space via a tensor product.
+
+To form the spectral element model, we insert \cref{eq:spectral-expansion} into \cref{eq:weak-form}.
+Additionally, we choose $v(x,y,z)$ to belong to the same space as $\psi(x,y,z)$, forming a Galerkin projection:
+\begin{equation}
+  v(x,y,z)=\sum_{\hat{\imath}=0}^{P}\sum_{\hat{\jmath}=0}^{P}\sum_{\hat{k}=0}^{P}v_{\hat{\imath}\hat{\jmath}\hat{k}}\ell_{\hat{\imath}}(x)\ell_{\hat{\jmath}}(y)\ell_{\hat{k}}(z).
+\end{equation}
+giving, in Kronecker product notation:
+\begin{multline}
+  -\ohat_x\left(\hat{M}_z \otimes \hat{M}_y \otimes \hat{H}_x\right)-\ohat_y\left(\hat{M}_z \otimes\hat{H}_y \otimes\hat{M}_x \right)-\ohat_z\left(\hat{H}_z \otimes\hat{M}_y \otimes\hat{M}_x\right)+\\
+  +\Sigma_t \left(\hat{M}_z \otimes\hat{M}_y \otimes\hat{M}_x\right)\vec{\psi}=\left(\hat{M}_z \otimes\hat{M}_y \otimes\hat{M}_x \right)\vec{q}
+\end{multline}
+where, defining indices mappings $q = i + j(N+1)+k(N+1)^2$, $\hat{q} = \hat{\imath} + \hat{\jmath}(N+1)+\hat{k}(N+1)^2$ and assume a coordinate transformation from the global domain to the reference domain $\rvec (\mu,\eta,\xi)$ for $\mu,\eta,\xi \in [-1,1]^3$:
+\begin{subequations}
+  \begin{equation}
+    \left(\hat{M}\right)_{q\hat{q}}:= \int_{-1}^{1}\ell_i (\mu)\ell_{\hat{\imath}}(\mu)\odif{\mu}\int_{-1}^{1}\ell_j (\eta)\ell_{\hat{\jmath}}(\eta)\odif{\eta}\int_{-1}^{1}\ell_k (xi)\ell_{\hat{k}}(\xi)\odif{\xi}\left|\pdv{\rvec}{\mu,\eta,\xi}\right|
+  \end{equation}
+  \begin{equation}
+    \left(\hat{K}_x\right)_{q\hat{q}}:= \int_{-1}^{1}\ell_i (\mu)\odv{\ell_{\hat{\imath}}(\mu)}{\mu}\odif{\mu}\int_{-1}^{1}\ell_j (\eta)\ell_{\hat{\jmath}}(\eta)\odif{\eta}\int_{-1}^{1}\ell_k (\xi)\ell_{\hat{k}}(\xi)\odif{\xi}\left|\pdv{\rvec}{\mu,\eta,\xi}\right|
+  \end{equation}
+  \begin{equation}
+    \left(\hat{K}_y\right)_{q\hat{q}}:= \int_{-1}^{1}\ell_i (\mu)\ell_{\hat{\imath}}(\mu)\odif{\mu}\int_{-1}^{1}\ell_j (\eta)\odv{\ell_{\hat{\jmath}}(\eta)}{\eta}\odif{\eta}\int_{-1}^{1}\ell_k (\xi)\ell_{\hat{k}}(\xi)\odif{\xi}\left|\pdv{\rvec}{\mu,\eta,\xi}\right|
+  \end{equation}
+  \begin{equation}
+    \left(\hat{K}_z\right)_{q\hat{q}}:= \int_{-1}^{1}\ell_i (\mu)\ell_{\hat{\imath}}(\mu)\odif{\mu}\int_{-1}^{1}\ell_j (\eta)\ell_{\hat{\jmath}}(\eta)\odif{\eta}\int_{-1}^{1}\ell_k (\xi)\odv{\ell_{\hat{k}}(\xi)}{\xi}\odif{\xi}\left|\pdv{\rvec}{\mu,\eta,\xi}\right|
+  \end{equation}
+\end{subequations}
