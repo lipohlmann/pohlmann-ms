@@ -58,15 +58,78 @@ Additionally, we choose $v(x,y,z)$ to belong to the same space as $\psi(x,y,z)$,
 \begin{equation}
   v(x,y,z)=\sum_{\hat{\imath}=0}^{P}\sum_{\hat{\jmath}=0}^{P}\sum_{\hat{k}=0}^{P}v_{\hat{\imath}\hat{\jmath}\hat{k}}\ell_{\hat{\imath}}(x)\ell_{\hat{\jmath}}(y)\ell_{\hat{k}}(z).
 \end{equation}
-To expose the tensor-product structure, we assume each element is a rectangular box with side lengths $h_x$, $h_y$, and $h_z$, mapped affinely onto the reference cube $(\mu,\eta,\xi)\in[-1,1]^3$:
+\subsubsection{Curvilinear Elements}
+To represent curved geometry, such as fuel pins and coolant channels, each hexahedral element is mapped from the reference cube $(\mu,\eta,\xi)\in[-1,1]^3$ \emph{isoparametrically}, i.e., using the same Lagrange basis as the solution \cite{devilleIterativeSolutionIsoparametric1987,devilleHighorderMethodsIncompressible2002}:
+\begin{equation}
+  \label{eq:isoparametric-map}
+  \rvec(\mu,\eta,\xi)=\sum_{i=0}^{P}\sum_{j=0}^{P}\sum_{k=0}^{P}\rvec_{ijk}\,\ell_i(\mu)\ell_j(\eta)\ell_k(\xi),
+\end{equation}
+where $\rvec_{ijk}$ are the physical coordinates of the element's \gls{gll} nodes.
+The element faces are therefore polynomial surfaces of degree $P$, and on each element the basis functions in \cref{eq:spectral-expansion} are understood as $\ell_i(\mu)\ell_j(\eta)\ell_k(\xi)$, with $(\mu,\eta,\xi)$ the reference coordinates of the point $\rvec$.
+Writing $(r_1,r_2,r_3)=(\mu,\eta,\xi)$, the geometry enters through the Jacobian and the metric gradients,
+\begin{equation}
+  \label{eq:geometric-factors}
+  J:=\det\left(\pdv{\rvec}{\mu,\eta,\xi}\right),\qquad
+  \nabla\mu=\frac{1}{J}\pdv{\rvec}{\eta}\times\pdv{\rvec}{\xi},\quad
+  \nabla\eta=\frac{1}{J}\pdv{\rvec}{\xi}\times\pdv{\rvec}{\mu},\quad
+  \nabla\xi=\frac{1}{J}\pdv{\rvec}{\mu}\times\pdv{\rvec}{\eta},
+\end{equation}
+which vary within a curved element and are evaluated at each \gls{gll} node by differentiating \cref{eq:isoparametric-map}.
+By the chain rule, the streaming derivative of the test function is
+\begin{equation}
+  \ohat\cdot\nabla v=\sum_{d=1}^{3}\left(\ohat\cdot\nabla r_d\right)\pdv{v}{r_d}.
+\end{equation}
+
+We evaluate every volume integral in \cref{eq:weak-form} with the tensor-product \gls{gll} rule, $\int_e f\odif{V}\approx\sum_m W_m J_m f(\rvec_m)$, where $m = i + j(P+1)+k(P+1)^2$ indexes the volume nodes (and $\hat{m} = \hat{\imath} + \hat{\jmath}(P+1)+\hat{k}(P+1)^2$ the test functions), $W_m:=\rho_i\rho_j\rho_k$, and a subscript $m$ denotes evaluation at node $m$.
+Derivatives of the basis at the nodes require only the one-dimensional \gls{gll} differentiation matrix,
+\begin{equation}
+  \label{eq:gll-diff}
+  \hat{D}_{p\hat{\imath}}:=\odv{\ell_{\hat{\imath}}}{\mu}\bigg|_{\mu_p},
+\end{equation}
+applied along one reference direction at a time:
+\begin{equation}
+  D_1:=I\otimes I\otimes\hat{D},\qquad D_2:=I\otimes\hat{D}\otimes I,\qquad D_3:=\hat{D}\otimes I\otimes I,
+\end{equation}
+where $I$ is the $(P+1)\times(P+1)$ identity.
+Because the quadrature points coincide with the interpolation nodes, the mass matrix remains diagonal even on a curved element, and all of the geometry collects into diagonal matrices of nodal values:
+\begin{subequations}
+  \label{eq:sem-general-matrices}
+  \begin{align}
+    \label{eq:general-mass}
+    M                     & \approx \operatorname{diag}\left(W_mJ_m\right),                                                                          \\
+    \label{eq:general-streaming}
+    S_{\ohat}             & \approx \sum_{d=1}^{3}D_d^{T}\Lambda_d\left(\ohat\right),\qquad
+    \Lambda_d\left(\ohat\right):=\operatorname{diag}\left(W_mJ_m\,\ohat\cdot\nabla r_d\big|_m\right),                                                 \\
+    \label{eq:general-boundary}
+    \Gamma_f\left(\ohat\right) & \approx \operatorname{diag}\left(\omega^f_m J^f_m\,\ohat\cdot\hat{n}^f_m\right),\qquad f=1,\ldots,6,
+  \end{align}
+\end{subequations}
+where $(S_{\ohat})_{\hat{m}m}\approx\int_e \ell_m\,\ohat\cdot\nabla\ell_{\hat{m}}\odif{V}$ is the streaming matrix, and, on face $f$, $\omega^f_m$ is the two-dimensional \gls{gll} weight (e.g., $\rho_j\rho_k$ on the faces $\mu=\pm1$), $J^f$ is the surface Jacobian (e.g., $\left|\pdv{\rvec}{\eta}\times\pdv{\rvec}{\xi}\right|$ on $\mu=\pm1$), and $\hat{n}^f$ is the outward unit normal.
+The discrete form of \cref{eq:weak-form} on a single element is then
+\begin{equation}
+  \label{eq:sem-general}
+  \sum_{f=1}^{6}E_f^{T}\,\Gamma_f\left(\ohat\right)\vec{\psi}^{*}_f
+  -S_{\ohat}\vec{\psi}
+  +\Sigma_t M\vec{\psi}
+  =M\vec{q},
+\end{equation}
+where $E_f$ extracts the $(P+1)^2$ nodes of face $f$ from the volume vector, and $\vec{\psi}^{*}_f$ is the upwind trace on that face: the element's own angular flux at nodes where $\ohat\cdot\hat{n}^f>0$, and the angular flux from the neighboring element or the boundary condition where $\ohat\cdot\hat{n}^f<0$.
+On a curved face, $\ohat\cdot\hat{n}^f$ can change sign along the face, so this choice is made node by node.
+
+\Cref{eq:sem-general} is never assembled as a dense $(P+1)^3\times(P+1)^3$ element matrix.
+Applying $S_{\ohat}$ to a vector requires only the three one-dimensional derivative sweeps $D_d$ and their transposes, each costing $\mathcal{O}(P^4)$ operations per element, together with $\mathcal{O}(P^3)$ diagonal scalings, compared with $\mathcal{O}(P^6)$ operations for a dense element matrix; only the nodal geometric factors need to be stored.
+This \emph{sum factorization} is the matrix-free approach used by nekRS \cite{fischerNekRSGPUacceleratedSpectral2022}.
+
+\subsubsection{Rectilinear Elements}
+The tensor-product structure becomes explicit when the element is a rectangular box with side lengths $h_x$, $h_y$, and $h_z$, mapped affinely onto the reference cube:
 \begin{equation}
   x = x_0+\frac{h_x}{2}\left(\mu+1\right),\quad
   y = y_0+\frac{h_y}{2}\left(\eta+1\right),\quad
-  z = z_0+\frac{h_z}{2}\left(\xi+1\right),
+  z = z_0+\frac{h_z}{2}\left(\xi+1\right).
 \end{equation}
-so that $\odif{x}=\frac{h_x}{2}\odif{\mu}$ and $\pdv{}{x}=\frac{2}{h_x}\pdv{}{\mu}$ (and likewise in $y$ and $z$), and every volume and surface integral factors into a product of one-dimensional integrals.
-(For a general hexahedron the Jacobian varies within the element and couples the coordinate directions, so the tensor-product structure is retained only through sum factorization with pointwise geometric factors.)
-Under this assumption, the Galerkin projection gives, in Kronecker product notation:
+The geometric factors in \cref{eq:geometric-factors} are then constant: $J=\frac{h_xh_yh_z}{8}$, $\nabla\mu=\frac{2}{h_x}\hat{x}$, $\nabla\eta=\frac{2}{h_y}\hat{y}$, and $\nabla\xi=\frac{2}{h_z}\hat{z}$.
+For example, $\Lambda_1=\ohat_x\frac{h_yh_z}{4}\operatorname{diag}\left(W_m\right)$, and since $\operatorname{diag}\left(W_m\right)=\hat{M}\otimes\hat{M}\otimes\hat{M}$ with $\hat{M}$ and $\hat{S}=\hat{D}^{T}\hat{M}$ as evaluated in \cref{eq:mass-gll-integral,eq:streaming-gll-integral} below, $D_1^{T}\Lambda_1=\ohat_x\frac{h_yh_z}{4}\left(\hat{M}\otimes\hat{M}\otimes\hat{S}\right)$.
+Every term in \cref{eq:sem-general} collapses in this way into a Kronecker product of one-dimensional matrices, giving:
 \begin{multline}
   \label{eq:sem-kronecker}
   \ohat_x\left(M_z\otimes M_y\otimes B_x\right)\vec{\psi}^{*}
@@ -78,10 +141,9 @@ Under this assumption, the Galerkin projection gives, in Kronecker product notat
   +\Sigma_t\left(M_z\otimes M_y\otimes M_x\right)\vec{\psi}
   =\left(M_z\otimes M_y\otimes M_x\right)\vec{q},
 \end{multline}
-where the nodal values in $\vec{\psi}$ and $\vec{q}$ are ordered by the index mapping $m = i + j(P+1)+k(P+1)^2$ (and $\hat{m} = \hat{\imath} + \hat{\jmath}(P+1)+\hat{k}(P+1)^2$ for the test function), so that the $x$-direction matrix appears rightmost in each Kronecker product.
-The first three terms arise from the surface integral in \cref{eq:weak-form}.
-On each face, $\vec{\psi}^{*}$ is the upwind trace: the element's own angular flux on outflow faces ($\ohat\cdot\hat{n}>0$), and the angular flux from the neighboring element or the boundary condition on inflow faces ($\ohat\cdot\hat{n}<0$).
-Because the boundary matrices are nonzero only for the end nodes, only the face entries of $\vec{\psi}^{*}$ contribute.
+where the $x$-direction matrix appears rightmost in each Kronecker product because the $x$ index varies fastest in the node ordering $m$.
+The first three terms arise from the surface integral in \cref{eq:weak-form}, with $\vec{\psi}^{*}$ the upwind trace defined after \cref{eq:sem-general}.
+Because the boundary matrices are nonzero only for the end nodes, only the face entries of $\vec{\psi}^{*}$ contribute, and since each face of a box has a constant normal, the upwind choice is made face by face.
 
 Each one-dimensional matrix is a scaled copy of a reference matrix on $[-1,1]$:
 \begin{equation}
@@ -124,7 +186,7 @@ If we approximate the integrals in \cref{eq:mass-matrix,eq:streaming-matrix} usi
     \end{split}
   \end{equation}
 \end{subequations}
-where $\hat{D}_{p\hat{\imath}}:=\odv{\ell_{\hat{\imath}}}{\mu}\big|_{\mu_p}$ is the \gls{gll} differentiation matrix.
+where $\hat{D}$ is the \gls{gll} differentiation matrix of \cref{eq:gll-diff}.
 The integrand in \cref{eq:mass-matrix} is of degree $2P$, so \cref{eq:mass-gll-integral} is an approximation; the integrand in \cref{eq:streaming-matrix} is of degree $2P-1$, so \cref{eq:streaming-gll-integral} is exact.
 In matrix form, $\hat{M}=\operatorname{diag}\left(\rho_0,\rho_1,\ldots,\rho_P\right)$ and $\hat{S}=\hat{D}^{T}\hat{M}$; that is, \cref{eq:mass-gll-integral} implies that the mass matrix defined in \cref{eq:mass-matrix} will be \emph{diagonal}.
 The boundary matrix, \cref{eq:boundary-matrix}, requires no quadrature.
@@ -140,3 +202,7 @@ We can then write the entries of the Kronecker products in \cref{eq:sem-kronecke
 \end{subequations}
 with the $y$- and $z$-direction boundary terms following analogously.
 The streaming and boundary entries are approximate only through the lumped mass factors in the transverse directions.
+
+Although a reactor mesh is rarely made only of boxes, the rectilinear form remains useful in practice.
+A Kronecker-product operator can be inverted cheaply by fast diagonalization, which applies the inverse through one-dimensional eigendecompositions in $\mathcal{O}(P^4)$ operations per element. % TODO cite Lynch, Rice, and Thomas (1964) for fast diagonalization
+A curved element's operator, \cref{eq:sem-general}, does not factor this way, but replacing each element with a nearby box gives an inexpensive element-local preconditioner for it; Nek5000 and nekRS use this approach in their Schwarz smoothers \cite{fischerNekRSGPUacceleratedSpectral2022}.
