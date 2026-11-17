@@ -9,7 +9,7 @@ These equations are linked together via a quadrature set for the angle-integrate
 \end{equation}
 The source term in \cref{eq:sn-eqs} will be assumed to be comprised of scattering, fission, and an independent source:
 \begin{equation}
-  q_n^q\rarg:= \sum_{g'=1}^G \int_{4\pi}\Sigma_s^{g'\rightarrow g}\left(\rvec,\ohat'\cdot\ohat\right)\psi^{g'}\left(\rvec,\ohat'\right)\odif{\ohat'}+\frac{\chi^g}{4\pi \keff } \sum_{g'=1}^G  \nu^{g'}\Sigma_f^{g'}\phi^g\rarg+q^g_{\text{ind}}\left(\rvec,\ohat_n\right).
+  q_n^g\rarg:= \sum_{g'=1}^G \int_{4\pi}\Sigma_s^{g'\rightarrow g}\left(\rvec,\ohat'\cdot\ohat\right)\psi^{g'}\left(\rvec,\ohat'\right)\odif{\ohat'}+\frac{\chi^g}{4\pi \keff } \sum_{g'=1}^G  \nu^{g'}\Sigma_f^{g'}\phi^{g'}\rarg+q^g_{\text{ind}}\left(\rvec,\ohat_n\right).
 \end{equation}
 Some important notes:
 \begin{itemize}
@@ -20,7 +20,7 @@ Going forward, we drop the $n$ and $g$ indices where it is obvious they are impl
 
 First, we partition the spatial domain into $E$ non-overlapping subdomains of unstructured hexahedral elements.
 We then require \cref{eq:sn-eqs} to hold over each element.
-Multiplying \cref{eq:sn-eqs} by a test function, $v(x,y,z)$, integrating over all space, and applying vector identities we arrive at the weak form the of the \gls{fobte}:
+Multiplying \cref{eq:sn-eqs} by a test function, $v(x,y,z)$, integrating over all space, and applying vector identities we arrive at the weak form of the \gls{fobte}:
 \begin{equation}
   \label{eq:weak-form}
   \oint v\psi\ohat\cdot\hat{n}\odif{S}-\int \psi\ohat\cdot\nabla v\odif{V}+\int\Sigma_t\psi v\odif{V}=\int qv\odif{V}
@@ -41,16 +41,16 @@ From \cite{devilleHighorderMethodsIncompressible2002}:
 \begin{equation}
   \label{eq:gll}
   \begin{aligned}
-     & \int_{-1}^1 u(\xi)\odif{\xi} & \approx & \sum_{k=0}^{N}\rho_k u\left(\xi_k\right)                                  \\
+     & \int_{-1}^1 u(\xi)\odif{\xi} & \approx & \sum_{k=0}^{P}\rho_k u\left(\xi_k\right)                                  \\
      & \xi_k                        & =       & \begin{cases}
                                                   -1,                        & k=0              \\
-                                                  \text{zeros of }L'_N(\xi), & 1\leq k \leq N-1 \\
-                                                  1,                         & k=N              \\
+                                                  \text{zeros of }L'_P(\xi), & 1\leq k \leq P-1 \\
+                                                  1,                         & k=P              \\
                                                 \end{cases}                           \\
-     & \rho_k                       & =       & \frac{2}{N\left(N+1\right)}\frac{1}{\left[L_N\left(\xi_k\right)\right]^2}
+     & \rho_k                       & =       & \frac{2}{P\left(P+1\right)}\frac{1}{\left[L_P\left(\xi_k\right)\right]^2}
   \end{aligned}
 \end{equation}
-The above rule is exact for polynomials degree up to $2N-1$.
+The above rule is exact for polynomials of degree up to $2P-1$.
 Note that for $\rvec \in \mathbb{R}^n$, for $n>1$, a single quadrature set is created based on \cref{eq:gll}, then points are mapped to the higher space via a tensor product.
 
 To form the spectral element model, we insert \cref{eq:spectral-expansion} into \cref{eq:weak-form}.
@@ -58,23 +58,85 @@ Additionally, we choose $v(x,y,z)$ to belong to the same space as $\psi(x,y,z)$,
 \begin{equation}
   v(x,y,z)=\sum_{\hat{\imath}=0}^{P}\sum_{\hat{\jmath}=0}^{P}\sum_{\hat{k}=0}^{P}v_{\hat{\imath}\hat{\jmath}\hat{k}}\ell_{\hat{\imath}}(x)\ell_{\hat{\jmath}}(y)\ell_{\hat{k}}(z).
 \end{equation}
-giving, in Kronecker product notation:
+To expose the tensor-product structure, we assume each element is a rectangular box with side lengths $h_x$, $h_y$, and $h_z$, mapped affinely onto the reference cube $(\mu,\eta,\xi)\in[-1,1]^3$:
+\begin{equation}
+  x = x_0+\frac{h_x}{2}\left(\mu+1\right),\quad
+  y = y_0+\frac{h_y}{2}\left(\eta+1\right),\quad
+  z = z_0+\frac{h_z}{2}\left(\xi+1\right),
+\end{equation}
+so that $\odif{x}=\frac{h_x}{2}\odif{\mu}$ and $\pdv{}{x}=\frac{2}{h_x}\pdv{}{\mu}$ (and likewise in $y$ and $z$), and every volume and surface integral factors into a product of one-dimensional integrals.
+(For a general hexahedron the Jacobian varies within the element and couples the coordinate directions, so the tensor-product structure is retained only through sum factorization with pointwise geometric factors.)
+Under this assumption, the Galerkin projection gives, in Kronecker product notation:
 \begin{multline}
-  -\ohat_x\left(\hat{M}_z \otimes \hat{M}_y \otimes \hat{H}_x\right)-\ohat_y\left(\hat{M}_z \otimes\hat{H}_y \otimes\hat{M}_x \right)-\ohat_z\left(\hat{H}_z \otimes\hat{M}_y \otimes\hat{M}_x\right)+\\
-  +\Sigma_t \left(\hat{M}_z \otimes\hat{M}_y \otimes\hat{M}_x\right)\vec{\psi}=\left(\hat{M}_z \otimes\hat{M}_y \otimes\hat{M}_x \right)\vec{q}
+  \label{eq:sem-kronecker}
+  \ohat_x\left(M_z\otimes M_y\otimes B_x\right)\vec{\psi}^{*}
+  +\ohat_y\left(M_z\otimes B_y\otimes M_x\right)\vec{\psi}^{*}
+  +\ohat_z\left(B_z\otimes M_y\otimes M_x\right)\vec{\psi}^{*}\\
+  -\Big[\ohat_x\left(M_z\otimes M_y\otimes S_x\right)
+    +\ohat_y\left(M_z\otimes S_y\otimes M_x\right)
+  +\ohat_z\left(S_z\otimes M_y\otimes M_x\right)\Big]\vec{\psi}\\
+  +\Sigma_t\left(M_z\otimes M_y\otimes M_x\right)\vec{\psi}
+  =\left(M_z\otimes M_y\otimes M_x\right)\vec{q},
 \end{multline}
-where, defining indices mappings $q = i + j(N+1)+k(N+1)^2$, $\hat{q} = \hat{\imath} + \hat{\jmath}(N+1)+\hat{k}(N+1)^2$ and assume a coordinate transformation from the global domain to the reference domain $\rvec (\mu,\eta,\xi)$ for $\mu,\eta,\xi \in [-1,1]^3$:
+where the nodal values in $\vec{\psi}$ and $\vec{q}$ are ordered by the index mapping $m = i + j(P+1)+k(P+1)^2$ (and $\hat{m} = \hat{\imath} + \hat{\jmath}(P+1)+\hat{k}(P+1)^2$ for the test function), so that the $x$-direction matrix appears rightmost in each Kronecker product.
+The first three terms arise from the surface integral in \cref{eq:weak-form}.
+On each face, $\vec{\psi}^{*}$ is the upwind trace: the element's own angular flux on outflow faces ($\ohat\cdot\hat{n}>0$), and the angular flux from the neighboring element or the boundary condition on inflow faces ($\ohat\cdot\hat{n}<0$).
+Because the boundary matrices are nonzero only for the end nodes, only the face entries of $\vec{\psi}^{*}$ contribute.
+
+Each one-dimensional matrix is a scaled copy of a reference matrix on $[-1,1]$:
+\begin{equation}
+  M_x=\frac{h_x}{2}\hat{M},\quad S_x=\hat{S},\quad B_x=\hat{B},
+\end{equation}
+and likewise in $y$ and $z$ with $h_y$ and $h_z$.
+The streaming matrix carries no scale factor because the $\frac{h_x}{2}$ from $\odif{x}$ cancels the $\frac{2}{h_x}$ from $\pdv{}{x}$.
+With rows indexed by the test function and columns by the trial function, for $\hat{\imath},i\in\{0,1,\ldots,P\}$:
+\begin{subequations}
+  \label{eq:kronecker-matrix-defs}
+  \begin{align}
+    \label{eq:mass-matrix}
+    \left(\hat{M}\right)_{\hat{\imath}i} & := \int_{-1}^{1}\ell_{\hat{\imath}}(\mu)\,\ell_i(\mu)\odif{\mu}                \\
+    \label{eq:streaming-matrix}
+    \left(\hat{S}\right)_{\hat{\imath}i} & := \int_{-1}^{1}\odv{\ell_{\hat{\imath}}(\mu)}{\mu}\,\ell_i(\mu)\odif{\mu}     \\
+    \label{eq:boundary-matrix}
+    \left(\hat{B}\right)_{\hat{\imath}i} & := \Big[\ell_{\hat{\imath}}(\mu)\,\ell_i(\mu)\Big]_{-1}^{1}
+    =\delta_{\hat{\imath}P}\delta_{iP}-\delta_{\hat{\imath}0}\delta_{i0},
+  \end{align}
+\end{subequations}
+where the final equality in \cref{eq:boundary-matrix} holds because the endpoints $\mu=\pm1$ are \gls{gll} nodes.
+Integrating \cref{eq:streaming-matrix} by parts shows that the three reference matrices are related by $\hat{B}=\hat{S}+\hat{S}^{T}$.
+
+If we approximate the integrals in \cref{eq:mass-matrix,eq:streaming-matrix} using the \gls{gll} quadrature set of \cref{eq:gll}, noting that the nodes of the Lagrange interpolants are also the \gls{gll} nodes, so that $\ell_i(\mu_p)=\delta_{ip}$, we find:
 \begin{subequations}
   \begin{equation}
-    \left(\hat{M}\right)_{q\hat{q}}:= \int_{-1}^{1}\ell_i (\mu)\ell_{\hat{\imath}}(\mu)\odif{\mu}\int_{-1}^{1}\ell_j (\eta)\ell_{\hat{\jmath}}(\eta)\odif{\eta}\int_{-1}^{1}\ell_k (xi)\ell_{\hat{k}}(\xi)\odif{\xi}\left|\pdv{\rvec}{\mu,\eta,\xi}\right|
+    \label{eq:mass-gll-integral}
+    \begin{split}
+      \left(\hat{M}\right)_{\hat{\imath}i} & \approx \sum_{p=0}^{P}\rho_p\,\ell_{\hat{\imath}}(\mu_p)\,\ell_i(\mu_p) \\
+                                           & =\sum_{p=0}^{P}\rho_p\,\delta_{\hat{\imath}p}\delta_{ip}               \\
+                                           & =\rho_i\,\delta_{\hat{\imath}i}
+    \end{split}
   \end{equation}
   \begin{equation}
-    \left(\hat{K}_x\right)_{q\hat{q}}:= \int_{-1}^{1}\ell_i (\mu)\odv{\ell_{\hat{\imath}}(\mu)}{\mu}\odif{\mu}\int_{-1}^{1}\ell_j (\eta)\ell_{\hat{\jmath}}(\eta)\odif{\eta}\int_{-1}^{1}\ell_k (\xi)\ell_{\hat{k}}(\xi)\odif{\xi}\left|\pdv{\rvec}{\mu,\eta,\xi}\right|
-  \end{equation}
-  \begin{equation}
-    \left(\hat{K}_y\right)_{q\hat{q}}:= \int_{-1}^{1}\ell_i (\mu)\ell_{\hat{\imath}}(\mu)\odif{\mu}\int_{-1}^{1}\ell_j (\eta)\odv{\ell_{\hat{\jmath}}(\eta)}{\eta}\odif{\eta}\int_{-1}^{1}\ell_k (\xi)\ell_{\hat{k}}(\xi)\odif{\xi}\left|\pdv{\rvec}{\mu,\eta,\xi}\right|
-  \end{equation}
-  \begin{equation}
-    \left(\hat{K}_z\right)_{q\hat{q}}:= \int_{-1}^{1}\ell_i (\mu)\ell_{\hat{\imath}}(\mu)\odif{\mu}\int_{-1}^{1}\ell_j (\eta)\ell_{\hat{\jmath}}(\eta)\odif{\eta}\int_{-1}^{1}\ell_k (\xi)\odv{\ell_{\hat{k}}(\xi)}{\xi}\odif{\xi}\left|\pdv{\rvec}{\mu,\eta,\xi}\right|
+    \label{eq:streaming-gll-integral}
+    \begin{split}
+      \left(\hat{S}\right)_{\hat{\imath}i} & = \sum_{p=0}^{P}\rho_p\,\odv{\ell_{\hat{\imath}}}{\mu}\bigg|_{\mu_p}\ell_i(\mu_p) \\
+                                           & =\sum_{p=0}^{P}\rho_p\,\odv{\ell_{\hat{\imath}}}{\mu}\bigg|_{\mu_p}\delta_{ip}        \\
+                                           & =\rho_i\,\hat{D}_{i\hat{\imath}},
+    \end{split}
   \end{equation}
 \end{subequations}
+where $\hat{D}_{p\hat{\imath}}:=\odv{\ell_{\hat{\imath}}}{\mu}\big|_{\mu_p}$ is the \gls{gll} differentiation matrix.
+The integrand in \cref{eq:mass-matrix} is of degree $2P$, so \cref{eq:mass-gll-integral} is an approximation; the integrand in \cref{eq:streaming-matrix} is of degree $2P-1$, so \cref{eq:streaming-gll-integral} is exact.
+In matrix form, $\hat{M}=\operatorname{diag}\left(\rho_0,\rho_1,\ldots,\rho_P\right)$ and $\hat{S}=\hat{D}^{T}\hat{M}$; that is, \cref{eq:mass-gll-integral} implies that the mass matrix defined in \cref{eq:mass-matrix} will be \emph{diagonal}.
+The boundary matrix, \cref{eq:boundary-matrix}, requires no quadrature.
+We can then write the entries of the Kronecker products in \cref{eq:sem-kronecker} using \cref{eq:mass-gll-integral,eq:streaming-gll-integral,eq:boundary-matrix}:
+\begin{subequations}
+  \begin{align}
+    \left(M_z\otimes M_y\otimes M_x\right)_{\hat{m}m} & \approx \frac{h_xh_yh_z}{8}\,\rho_i\rho_j\rho_k\,\delta_{\hat{\imath}i}\delta_{\hat{\jmath}j}\delta_{\hat{k}k}                                \\
+    \left(M_z\otimes M_y\otimes S_x\right)_{\hat{m}m} & \approx \frac{h_yh_z}{4}\,\rho_i\rho_j\rho_k\,\hat{D}_{i\hat{\imath}}\,\delta_{\hat{\jmath}j}\delta_{\hat{k}k}                               \\
+    \left(M_z\otimes S_y\otimes M_x\right)_{\hat{m}m} & \approx \frac{h_xh_z}{4}\,\rho_i\rho_j\rho_k\,\delta_{\hat{\imath}i}\,\hat{D}_{j\hat{\jmath}}\,\delta_{\hat{k}k}                             \\
+    \left(S_z\otimes M_y\otimes M_x\right)_{\hat{m}m} & \approx \frac{h_xh_y}{4}\,\rho_i\rho_j\rho_k\,\delta_{\hat{\imath}i}\delta_{\hat{\jmath}j}\,\hat{D}_{k\hat{k}}                               \\
+    \left(M_z\otimes M_y\otimes B_x\right)_{\hat{m}m} & \approx \frac{h_yh_z}{4}\,\rho_j\rho_k\left(\delta_{\hat{\imath}P}\delta_{iP}-\delta_{\hat{\imath}0}\delta_{i0}\right)\delta_{\hat{\jmath}j}\delta_{\hat{k}k},
+  \end{align}
+\end{subequations}
+with the $y$- and $z$-direction boundary terms following analogously.
+The streaming and boundary entries are approximate only through the lumped mass factors in the transverse directions.
