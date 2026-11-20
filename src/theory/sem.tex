@@ -23,7 +23,7 @@ We then require \cref{eq:sn-eqs} to hold over each element.
 Multiplying \cref{eq:sn-eqs} by a test function, $v(x,y,z)$, integrating over all space, and applying vector identities we arrive at the weak form the of the \gls{fobte}:
 \begin{equation}
   \label{eq:weak-form}
-  \oint v\psi\ohat\cdot\hat{n}\odif{S}-\int \psi\ohat\cdot\nabla v\odif{V}+\int\Sigma_t\psi v\odif{V}=\int qv\odif{V}
+  \oint v\psi\ohat\cdot\hat{n}\odif{S}\underbrace{-\int \psi\ohat\cdot\nabla v\odif{V}+\int\Sigma_t\psi v\odif{V}}_{\mathcal{A}(\psi,v)}=\underbrace{\int qv\odif{V}}_{(q,v)}
 \end{equation}
 
 Next, we approximate the discrete-ordinate, within-group angular flux and source with a spectral expansion using Lagrange polynomials:
@@ -58,11 +58,10 @@ Additionally, we choose $v(x,y,z)$ to belong to the same space as $\psi(x,y,z)$,
 \begin{equation}
   v(x,y,z)=\sum_{\hat{\imath}=0}^{P}\sum_{\hat{\jmath}=0}^{P}\sum_{\hat{k}=0}^{P}v_{\hat{\imath}\hat{\jmath}\hat{k}}\ell_{\hat{\imath}}(x)\ell_{\hat{\jmath}}(y)\ell_{\hat{k}}(z).
 \end{equation}
-giving, in Kronecker product notation:
-\begin{multline}
-  -\ohat_x\left(\hat{M}_z \otimes \hat{M}_y \otimes \hat{H}_x\right)-\ohat_y\left(\hat{M}_z \otimes\hat{H}_y \otimes\hat{M}_x \right)-\ohat_z\left(\hat{H}_z \otimes\hat{M}_y \otimes\hat{M}_x\right)+\\
-  +\Sigma_t \left(\hat{M}_z \otimes\hat{M}_y \otimes\hat{M}_x\right)\vec{\psi}=\left(\hat{M}_z \otimes\hat{M}_y \otimes\hat{M}_x \right)\vec{q}
-\end{multline}
+giving:
+\begin{equation}
+  -\ohat_x \hat{K}_x \vec{\psi} - \ohat_y \hat{K}_y \vec{\psi} - \ohat_z \hat{K}_z \vec{\psi} + \Sigma_t \hat{M}\vec{\psi} = \hat{M}\vec{q}
+\end{equation}
 where, defining indices mappings $q = i + j(N+1)+k(N+1)^2$, $\hat{q} = \hat{\imath} + \hat{\jmath}(N+1)+\hat{k}(N+1)^2$ and assume a coordinate transformation from the global domain to the reference domain $\rvec (\mu,\eta,\xi)$ for $\mu,\eta,\xi \in [-1,1]^3$:
 \begin{subequations}
   \begin{equation}
@@ -75,6 +74,6 @@ where, defining indices mappings $q = i + j(N+1)+k(N+1)^2$, $\hat{q} = \hat{\ima
     \left(\hat{K}_y\right)_{q\hat{q}}:= \int_{-1}^{1}\ell_i (\mu)\ell_{\hat{\imath}}(\mu)\odif{\mu}\int_{-1}^{1}\ell_j (\eta)\odv{\ell_{\hat{\jmath}}(\eta)}{\eta}\odif{\eta}\int_{-1}^{1}\ell_k (\xi)\ell_{\hat{k}}(\xi)\odif{\xi}\left|\pdv{\rvec}{\mu,\eta,\xi}\right|
   \end{equation}
   \begin{equation}
-    \left(\hat{K}_z\right)_{q\hat{q}}:= \int_{-1}^{1}\ell_i (\mu)\ell_{\hat{\imath}}(\mu)\odif{\mu}\int_{-1}^{1}\ell_j (\eta)\ell_{\hat{\jmath}}(\eta)\odif{\eta}\int_{-1}^{1}\ell_k (\xi)\odv{\ell_{\hat{k}}(\xi)}{\xi}\odif{\xi}\left|\pdv{\rvec}{\mu,\eta,\xi}\right|
+    \left(\hat{K}_z\right)_{q\hat{q}}:= \int_{-1}^{1}\ell_i (\mu)\ell_{\hat{\imath}}(\mu)\odif{\mu}\int_{-1}^{1}\ell_j (\eta)\ell_{\hat{\jmath}}(\eta)\odif{\eta}\int_{-1}^{1}\ell_k (\xi)\odv{\ell_{\hat{k}}(\xi)}{\xi}\odif{\xi}\left|\pdv{\rvec}{\mu,\eta,\xi}\right|.
   \end{equation}
 \end{subequations}
